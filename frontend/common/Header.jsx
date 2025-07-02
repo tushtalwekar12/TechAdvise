@@ -21,7 +21,7 @@ const Header = () => {
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/">Home</Link>
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/internships">Internships</Link>
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/resources">Resources</Link>
-          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/guidance">Services</Link>
+          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/services">Services</Link>
         </div>
         <div className="flex gap-2">
           <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
