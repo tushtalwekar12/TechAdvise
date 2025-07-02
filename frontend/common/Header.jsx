@@ -20,17 +20,12 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-6 md:gap-9">
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/">Home</Link>
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/internships">Internships</Link>
-          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/jobs">Jobs</Link>
-          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/virtual-classes">Virtual Classes</Link>
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/resources">Resources</Link>
-          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/guidance">Guidance</Link>
+          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/guidance">Services</Link>
         </div>
         <div className="flex gap-2">
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-            <span className="truncate">Sign Up</span>
-          </button>
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f0f2f5] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">
-            <span className="truncate">Login</span>
+          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+            <span className="truncate">Get Quotes</span>
           </button>
         </div>
       </div>
