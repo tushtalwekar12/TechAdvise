@@ -58,7 +58,7 @@ const TestimonialSection = () => {
   };
 
   return (
-    <section className="px-4 py-12 bg-[#f9fafb]">
+    <section className="px-4 md:px-10 lg:px-20 pt-10 pb-16">
       <h2 className="text-center text-3xl font-bold text-[#111518] mb-10">
         What Our Clients Say
       </h2>

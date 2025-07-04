@@ -9,7 +9,7 @@ const HighlightsSection = () => {
         Why Choose TechAdvise?
       </h2>
 
-      <div className="flex flex-wrap gap-6 p-6 justify-center">
+      <div className="flex flex-wrap gap-6 px-4 md:px-10 lg:px-20 py-6 justify-center">
         {/* IT Services Card */}
         <div className="flex min-w-[250px] flex-1 flex-col gap-4 rounded-xl p-6 bg-gradient-to-br from-[#f9fafc] to-[#e8ecf1] transition-transform hover:scale-102 hover:shadow-xl hover:border-l-4 hover:border-blue-500">
           <div className="flex items-center gap-3">
