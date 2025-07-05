@@ -5,6 +5,10 @@ import HomePage from '../pages/HomePage';
 import ServicePage from '../pages/ServicePage';
 import IntershipPage from '../pages/IntershipPage';
 import ResourcesPage from '../pages/ResourcesPage';
+import AboutPage from '../pages/AboutPage';
+import ContactPage from '../pages/ContactPage';
+import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
+import TermsOfServicePage from '../pages/TermsOfServicePage';
 import App from '../src/App';
 
 const AppRoutes = () => (
@@ -14,6 +18,10 @@ const AppRoutes = () => (
       <Route path="services" element={<ServicePage />} />
       <Route path="internships" element={<IntershipPage />} />
       <Route path="resources" element={<ResourcesPage />} />
+      <Route path="about" element={<AboutPage />} />
+      <Route path="contact" element={<ContactPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms-of-service" element={<TermsOfServicePage />} />
       {/* Add more routes here */}
     </Route>
   </Routes>
