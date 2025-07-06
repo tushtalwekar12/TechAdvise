@@ -22,6 +22,7 @@ const AppRoutes = () => (
       <Route path="contact" element={<ContactPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+      <Route path="/services" element={<ServicePage />} />
       {/* Add more routes here */}
     </Route>
   </Routes>
