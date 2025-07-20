@@ -70,25 +70,81 @@ export const validateInternship = [
     .notEmpty().withMessage('Title is required')
     .isLength({ min: 3, max: 100 }).withMessage('Title must be between 3 and 100 characters'),
 
-  body('description')
+  body('domain')
     .trim()
-    .notEmpty().withMessage('Description is required')
-    .isLength({ min: 10, max: 2000 }).withMessage('Description must be between 10 and 2000 characters'),
+    .notEmpty().withMessage('Domain is required')
+    .isLength({ min: 2, max: 50 }).withMessage('Domain must be between 2 and 50 characters'),
 
-  body('duration')
+  body('company')
     .trim()
-    .notEmpty().withMessage('Duration is required')
-    .isLength({ min: 2, max: 50 }).withMessage('Duration must be between 2 and 50 characters'),
+    .notEmpty().withMessage('Company is required')
+    .isLength({ min: 2, max: 100 }).withMessage('Company must be between 2 and 100 characters'),
 
   body('location')
     .trim()
     .notEmpty().withMessage('Location is required')
     .isLength({ min: 2, max: 100 }).withMessage('Location must be between 2 and 100 characters'),
 
-  body('icon')
+  body('duration')
+    .isArray().withMessage('Duration must be an array of numbers')
+    .notEmpty().withMessage('Duration is required'),
+
+  body('duration.*')
+    .isInt({ min: 1 }).withMessage('Duration values must be positive integers'),
+
+  body('salary')
+    .trim()
+    .notEmpty().withMessage('Salary is required')
+    .isLength({ min: 2, max: 100 }).withMessage('Salary must be between 2 and 100 characters'),
+
+  body('deadline')
+    .notEmpty().withMessage('Deadline is required')
+    .isISO8601().withMessage('Deadline must be a valid date'),
+
+  body('status')
+    .optional()
+    .isIn(['Open', 'Closed', 'Pending']).withMessage('Status must be Open, Closed, or Pending'),
+
+  body('urgent')
+    .optional()
+    .isBoolean().withMessage('Urgent must be a boolean value'),
+
+  body('description')
+    .trim()
+    .notEmpty().withMessage('Description is required')
+    .isLength({ min: 10, max: 2000 }).withMessage('Description must be between 10 and 2000 characters'),
+
+  body('requirements')
+    .isArray().withMessage('Requirements must be an array of strings')
+    .notEmpty().withMessage('Requirements are required'),
+
+  body('requirements.*')
+    .trim()
+    .notEmpty().withMessage('Requirement cannot be empty')
+    .isLength({ min: 2, max: 200 }).withMessage('Requirement must be between 2 and 200 characters'),
+
+  body('benefits')
+    .isArray().withMessage('Benefits must be an array of strings')
+    .notEmpty().withMessage('Benefits are required'),
+
+  body('benefits.*')
+    .trim()
+    .notEmpty().withMessage('Benefit cannot be empty')
+    .isLength({ min: 2, max: 200 }).withMessage('Benefit must be between 2 and 200 characters'),
+
+  body('image')
     .optional()
     .trim()
-    .isLength({ max: 100 }).withMessage('Icon must not exceed 100 characters'),
+    .isURL().withMessage('Image must be a valid URL'),
+
+  handleValidationErrors
+];
+
+// Internship status update validation
+export const validateInternshipStatusUpdate = [
+  body('status')
+    .notEmpty().withMessage('Status is required')
+    .isIn(['Open', 'Closed', 'Pending']).withMessage('Status must be Open, Closed, or Pending'),
 
   handleValidationErrors
 ]; 

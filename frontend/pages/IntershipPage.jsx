@@ -1,87 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-const internshipData = [
-  {
-    id: 1,
-    title: 'Marketing Intern',
-    domain: 'Marketing',
-    company: 'TeachAdvise',
-    location: 'Remote / Hybrid',
-    duration: [30, 45, 90, 180],
-    salary: 'Unpaid Internship',
-    deadline: '2025-08-01',
-    status: 'Open',
-    urgent: true,
-    description: 'Join our dynamic marketing team and gain hands-on experience in digital marketing, social media management, and content creation. Work on real campaigns and learn from industry experts.',
-    requirements: ['Strong communication skills', 'Social media savvy', 'Creative mindset', 'Basic analytics knowledge'],
-    benefits: ['Flexible work hours', 'Mentorship program', 'Certificate upon completion', 'Potential full-time offer'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCONdaxPebNfCLbZHYCfJsjWNozDM64LswmYp2KXEBCW9FO5BZHT86uD9O23jlLthB32rOUJZggO-M6qtSc37cvo7t9bWoO2HZ9zLPx5RkpUmwhaM4UOzFYrTQtaUHGU64fWXuLhxukAAVPsnKStO6kwBa7zP63l1cBRZOknCfFR_Qm37D5Dhlm1Z3Y64Ys0A18zAoyu4HrNHRcOdAPWZyfDGdrXsF4faJ9cSveiimqdcKtSGRatWlRfTqGxikfmn0AOUNDYnn3OqJI',
-  },
-  {
-    id: 2,
-    title: 'Software Engineering Intern',
-    domain: 'Tech',
-    company: 'TeachAdvise',
-    location: 'Remote / On-site',
-    duration: [45, 90, 180],
-    salary: 'Unpaid Internship',
-    deadline: '2025-08-01',
-    status: 'Open',
-    urgent: false,
-    description: 'Develop cutting-edge educational technology solutions. Work with modern tech stack including React, Node.js, and cloud platforms. Contribute to products used by thousands of students.',
-    requirements: ['JavaScript/React knowledge', 'Problem-solving skills', 'Git experience', 'Computer Science background'],
-    benefits: ['Latest tech tools', 'Code review mentorship', 'Portfolio projects', 'Competitive salary'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5-Qh3IjNY8rPqWM82aUPb1ga5SkXoIpRmI23Mz9Tj-KoUo67ZaZL_HqJRUR4alNyfxKGKS7q48eluFiK_c6khL8_5qH4AST78W8ZQxR0YF0M9i9pUnL7CpbjHFnsE9b6Q-qxkwjArR8pida1mkbEzz3Od6xHkMFJkhPe0y0JebtzG9TecwsUjH-oJ3WrnRLs_sIfGDa-yw3LBAgXRGaWs6yjERRXVANhDZ449JGm3WG0wFtDzwi9GcOrLQ3jJXjZ0x3N6_7G5D87A',
-  },
-  {
-    id: 3,
-    title: 'Graphic Design Intern',
-    domain: 'Design',
-    company: 'TeachAdvise',
-    location: 'Remote',
-    duration: [30, 45, 90],
-    salary: 'Unpaid Internship',
-    deadline: '2025-08-01',
-    status: 'Open',
-    urgent: true,
-    description: 'Create visually stunning designs for our educational platform. Work on branding, UI/UX design, and marketing materials. Build a strong portfolio with real client work.',
-    requirements: ['Adobe Creative Suite', 'Design principles', 'Portfolio required', 'Attention to detail'],
-    benefits: ['Design software license', 'Creative freedom', 'Portfolio building', 'Industry networking'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOSUPrJv16AlbMRp0ZtyEl3enH7MucvsVfLr6FHKYu5RLeOFhqZpYvCQRDWXWEn-LLAbGcxjmKwmWcrUhUys2pQ3SFcBEML6CTBxllGV4MyrR-qvU958-vxpv-avbTbbwsKNUmjuBjv563xRPLEUtdufs-iIY7jCEUfVSTrqO1gfevUhzJrLOv6Ox4yAsk-DUB62OMJNkzXvv8eHnCKMqIJLbtnB6hOPPfg0PcHIkalL2czlN8mngYDECjsusVWygq_2r0-qT2SSj-',
-  },
-  {
-    id: 4,
-    title: 'Finance Intern',
-    domain: 'Finance',
-    company: 'TeachAdvise',
-    location: 'Hybrid',
-    duration: [90, 180],
-    salary: 'Unpaid Internship',
-    deadline: '2025-08-01',
-    status: 'Open',
-    urgent: false,
-    description: 'Gain practical experience in financial analysis, budgeting, and reporting. Work closely with our finance team on real business challenges and learn industry best practices.',
-    requirements: ['Accounting/Finance major', 'Excel proficiency', 'Analytical thinking', 'Attention to detail'],
-    benefits: ['Financial modeling training', 'Industry certifications', 'Networking opportunities', 'Performance bonuses'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuARdAjAp3UiQeKC_RRrnfhNxS5RzaHIqNs3N5zs5dEsd_rchnVwNAvmLfm1AneRP5FX5DN-RrNOsZJS4bk2bY3lvxw4LqtQFtrw_kfknqLq3rh4ii1xgGVBeBgFW8xCxUzB_Po7JG7iQhQhMqu0-jHkbDRXlyMtp5L-CDhAW0d1wsypakuHTDhzo_6B7IkiQ2ZpVpxQnq_R2l7Iw5-EdvSg9wfCGyXeIGxGyYwoYK4diQffQERgawQ5DgKHCdPiS-mcdQMd-wZeWpVq',
-  },
-  {
-    id: 5,
-    title: 'Human Resources Intern',
-    domain: 'HR',
-    company: 'TeachAdvise',
-    location: 'On-site',
-    duration: [45, 90, 180],
-    salary: 'Unpaid Internship',
-    deadline: '2025-08-01',
-    status: 'Open',
-    urgent: false,
-    description: 'Support our HR team in recruitment, employee engagement, and organizational development. Learn about modern HR practices and people management strategies.',
-    requirements: ['HR/Management major', 'Interpersonal skills', 'Confidentiality', 'Organizational skills'],
-    benefits: ['HR certification prep', 'Leadership training', 'Employee relations experience', 'Career guidance'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDd6gzqr3zfrwvWUkoDfpSkJRASu-OR0CXU0Akoz0M-IFK8H0Amy1BLKSHafjazka9wivoYtdO9YwUv2Baa2tt2ELLRDv8uyENQWlhXGndD7r-lymSdtBe0zHx-6wSJXGqN9PCs2fX5ombO7C0O0vc2puOPt7YqcDc5Bxk9urCtoNnqx0tpMJVKMwbGK71SEnuidmgg0nRYh2g6f7vJUv6WBJMRmElQZmSa0lfWLU7_20FSXLTCUtfAS_jdeunE1oEH8SODLgSuy8lR',
-  },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchInternships } from '../features/internships/internshipSlice';
 
 const faqData = [
   {
@@ -111,6 +30,13 @@ const faqData = [
 ];
 
 const InternshipPage = () => {
+  const dispatch = useDispatch();
+  const { items: internshipData, loading, error } = useSelector(state => state.internships);
+
+  useEffect(() => {
+    dispatch(fetchInternships());
+  }, [dispatch]);
+
   const [selectedDomain, setSelectedDomain] = useState('');
   const [selectedDuration, setSelectedDuration] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -193,6 +119,14 @@ const InternshipPage = () => {
     const days = Math.ceil((new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24));
     return days;
   };
+
+  // Add loading and error states
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading internships...</div>;
+  }
+  if (error) {
+    return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

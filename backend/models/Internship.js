@@ -5,11 +5,11 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
+  domain: {
     type: String,
     required: true
   },
-  duration: {
+  company: {
     type: String,
     required: true
   },
@@ -17,8 +17,41 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  icon: {
-    type: String, // URL or icon class name (e.g., from FontAwesome)
+  duration: {
+    type: [Number], // Array of numbers representing days
+    required: true
+  },
+  salary: {
+    type: String,
+    required: true
+  },
+  deadline: {
+    type: Date,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['Open', 'Closed', 'Pending'],
+    default: 'Open'
+  },
+  urgent: {
+    type: Boolean,
+    default: false
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  requirements: {
+    type: [String],
+    required: true
+  },
+  benefits: {
+    type: [String],
+    required: true
+  },
+  image: {
+    type: String, // URL to the internship image
     required: false
   },
   isActive: {

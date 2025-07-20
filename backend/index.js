@@ -11,6 +11,7 @@ import internshipRoutes from './routes/internshipRoutes.js';
 import subscriptionRoutes from './routes/subscriptionRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import quoteRoutes from './routes/quoteRoutes.js';
+import testimonialRoutes from './routes/testimonialRoutes.js';
 import rateLimit from 'express-rate-limit';
 import mcache from 'memory-cache';
 
@@ -39,6 +40,7 @@ app.use('/api/internships', internshipRoutes);
 app.use('/api/subscribe', subscriptionRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/quotes', quoteRoutes);
+app.use('/api/testimonials', testimonialRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).json({
