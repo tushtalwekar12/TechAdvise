@@ -5,7 +5,7 @@ export const fetchTestimonials = createAsyncThunk(
   'testimonials/fetchTestimonials',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/api/testimonial');
+      const response = await api.get('/api/testimonials');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -17,7 +17,7 @@ export const createTestimonial = createAsyncThunk(
   'testimonials/createTestimonial',
   async (testimonialData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/api/testimonial', testimonialData);
+      const response = await api.post('/api/testimonials', testimonialData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -29,7 +29,7 @@ export const updateTestimonial = createAsyncThunk(
   'testimonials/updateTestimonial',
   async ({ id, testimonialData }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/api/testimonial/${id}`, testimonialData);
+      const response = await api.put(`/api/testimonials/${id}`, testimonialData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -41,7 +41,7 @@ export const deleteTestimonial = createAsyncThunk(
   'testimonials/deleteTestimonial',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/testimonial/${id}`);
+      await api.delete(`/api/testimonials/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

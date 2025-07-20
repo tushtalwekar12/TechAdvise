@@ -20,6 +20,7 @@ import resourceRoutes from './routes/resourceRoutes.js';
 import highlightRoutes from './routes/highlightRoutes.js';
 import heroSectionRoutes from './routes/heroSectionRoutes.js';
 import contactInfoRoutes from './routes/contactInfoRoutes.js';
+import footerRoutes from './routes/footerRoutes.js';
 
 
 dotenv.config();
@@ -53,6 +54,7 @@ app.use('/api/about-page', aboutPageRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/highlights', highlightRoutes);
 app.use('/api/hero-section', heroSectionRoutes);
+app.use('/api/footer-content', footerRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).json({

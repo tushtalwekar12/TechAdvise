@@ -13,6 +13,18 @@ export const fetchHeroSection = createAsyncThunk(
   }
 );
 
+export const updateHeroSection = createAsyncThunk(
+  'heroSection/updateHeroSection',
+  async (heroData, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/api/hero-section', heroData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const heroSectionSlice = createSlice({
   name: 'heroSection',
   initialState: {
@@ -34,6 +46,10 @@ const heroSectionSlice = createSlice({
       .addCase(fetchHeroSection.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Update Hero Section
+      .addCase(updateHeroSection.fulfilled, (state, action) => {
+        state.content = action.payload.data;
       });
   },
 });

@@ -13,6 +13,18 @@ export const fetchFooterContent = createAsyncThunk(
   }
 );
 
+export const updateFooterContent = createAsyncThunk(
+  'footer/updateFooterContent',
+  async (footerData, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/api/footer-content', footerData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const footerSlice = createSlice({
   name: 'footer',
   initialState: {
@@ -34,6 +46,10 @@ const footerSlice = createSlice({
       .addCase(fetchFooterContent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Update Footer Content
+      .addCase(updateFooterContent.fulfilled, (state, action) => {
+        state.content = action.payload.data;
       });
   },
 });

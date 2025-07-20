@@ -13,6 +13,18 @@ export const fetchServicePageContent = createAsyncThunk(
   }
 );
 
+export const updateServicePageContent = createAsyncThunk(
+  'servicePage/updateServicePageContent',
+  async (serviceData, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/api/service-page', serviceData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const servicePageSlice = createSlice({
   name: 'servicePage',
   initialState: {
@@ -34,6 +46,10 @@ const servicePageSlice = createSlice({
       .addCase(fetchServicePageContent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Update Service Page Content
+      .addCase(updateServicePageContent.fulfilled, (state, action) => {
+        state.content = action.payload.data;
       });
   },
 });
