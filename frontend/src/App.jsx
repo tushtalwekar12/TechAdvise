@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import Footer from '../common/Footer';
+import BackToTopButton from "../components/BackToTopButton";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Outlet /> 
       </main>
       <Footer/>
+      <BackToTopButton />
     </div>
   );
 }
