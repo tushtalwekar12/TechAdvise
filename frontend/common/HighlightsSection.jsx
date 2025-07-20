@@ -1,64 +1,46 @@
-import React from 'react';
-import CountUp from 'react-countup';
-import { Briefcase, GraduationCap, SmileIcon } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchHighlights } from '../features/highlights/highlightsSlice';
+import { Trophy, Users, Headset, TrendUp } from 'phosphor-react';
+
+const ICON_MAP = {
+  'trophy': <Trophy size={40} color="#1383eb" />,
+  'users': <Users size={40} color="#1383eb" />,
+  'headset': <Headset size={40} color="#1383eb" />,
+  'trend-up': <TrendUp size={40} color="#1383eb" />,
+};
 
 const HighlightsSection = () => {
+  const dispatch = useDispatch();
+  const { items: highlights, loading, error } = useSelector(state => state.highlights);
+
+  useEffect(() => {
+    dispatch(fetchHighlights());
+  }, [dispatch]);
+
   return (
-    <>
-      <h2 className="text-2xl sm:text-3xl font-bold text-center px-4 pt-8 pb-2 text-[#111518]">
-        Why Choose TechAdvise?
+    <section className="py-12 px-4 md:px-10 lg:px-20 bg-white">
+      <h2 className="text-[#111518] text-2xl font-bold leading-tight tracking-tight mb-8 text-center">
+        Why Choose Us
       </h2>
-
-      <div className="flex flex-wrap gap-6 px-4 md:px-10 lg:px-20 py-6 justify-center">
-        {/* IT Services Card */}
-        <div className="flex min-w-[250px] flex-1 flex-col gap-4 rounded-xl p-6 bg-gradient-to-br from-[#f9fafc] to-[#e8ecf1] transition-transform hover:scale-102 hover:shadow-xl hover:border-l-4 hover:border-blue-500">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-100 p-2 rounded-full">
-              <Briefcase className="text-blue-600 w-5 h-5" />
+      {loading && <div>Loading highlights...</div>}
+      {error && <div className="text-red-600">Error: {error}</div>}
+      {highlights && highlights.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {highlights.map((highlight, idx) => (
+            <div key={highlight._id || idx} className="border border-[#dbe1e6] bg-white p-6 rounded-xl flex flex-col items-center text-center gap-4 hover:shadow-lg transition-all duration-300">
+              <div className="text-[#1383eb] text-4xl bg-blue-50 p-4 rounded-full">
+                {ICON_MAP[highlight.icon] || <Trophy size={40} color="#1383eb" />}
+              </div>
+              <h3 className="text-[#111518] text-lg font-bold leading-tight">{highlight.title}</h3>
+              <p className="text-[#617689] text-sm leading-relaxed">{highlight.description}</p>
             </div>
-            <p className="text-[#111518] text-base font-medium">IT Services</p>
-          </div>
-          <p className="text-[#111518] text-2xl font-bold">
-            <CountUp end={15} duration={8} />+ Tailored Solutions
-          </p>
-          <p className="text-[#60768a] text-sm">
-            Apps, websites, and modern IT platforms — built for startups and enterprises.
-          </p>
+          ))}
         </div>
-
-        {/* Internships Card */}
-        <div className="flex min-w-[250px] flex-1 flex-col gap-4 rounded-xl p-6 bg-gradient-to-br from-[#f9fafc] to-[#e8ecf1] transition-transform hover:scale-102 hover:shadow-xl hover:border-l-4 hover:border-green-500">
-          <div className="flex items-center gap-3">
-            <div className="bg-green-100 p-2 rounded-full">
-              <GraduationCap className="text-green-600 w-5 h-5" />
-            </div>
-            <p className="text-[#111518] text-base font-medium">Internships</p>
-          </div>
-          <p className="text-[#111518] text-2xl font-bold">
-            <CountUp end={500} duration={8} />+ Opportunities Created
-          </p>
-          <p className="text-[#60768a] text-sm">
-            Real-world internship experience in IT, Web, and Software directly at TechAdvise.
-          </p>
-        </div>
-
-        {/* Client Trust Card */}
-        <div className="flex min-w-[250px] flex-1 flex-col gap-4 rounded-xl p-6 bg-gradient-to-br from-[#f9fafc] to-[#e8ecf1] transition-transform hover:scale-102 hover:shadow-xl hover:border-l-4 hover:border-yellow-400">
-          <div className="flex items-center gap-3">
-            <div className="bg-yellow-100 p-2 rounded-full">
-              <SmileIcon className="text-yellow-600 w-5 h-5" />
-            </div>
-            <p className="text-[#111518] text-base font-medium">Client Trust</p>
-          </div>
-          <p className="text-[#111518] text-2xl font-bold">
-            <CountUp end={100} duration={8} />+ Happy Clients
-          </p>
-          <p className="text-[#60768a] text-sm">
-            Trusted by startups & businesses for reliable delivery, clarity, and results.
-          </p>
-        </div>
-      </div>
-    </>
+      ) : !loading && !error ? (
+        <div>No highlights found.</div>
+      ) : null}
+    </section>
   );
 };
 

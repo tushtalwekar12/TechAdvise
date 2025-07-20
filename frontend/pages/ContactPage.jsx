@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContactInfo } from '../features/contactInfo/contactInfoSlice';
 
 const ContactPage = () => {
+  const dispatch = useDispatch();
+  const { content, loading, error } = useSelector(state => state.contactInfo);
+
+  useEffect(() => {
+    dispatch(fetchContactInfo());
+  }, [dispatch]);
+
+  if (loading) return <div className="flex justify-center items-center min-h-screen">Loading contact info...</div>;
+  if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
+  if (!content) return null;
+
   return (
     <div className="px-4 md:px-20 lg:px-40 py-10 flex justify-center">
       <div className="w-full max-w-[512px]">
@@ -49,6 +62,12 @@ const ContactPage = () => {
         <div className="px-4 pt-6 space-y-4">
           <h3 className="text-lg font-bold text-[#111518]">Contact Information</h3>
 
+          {content.image && (
+            <div className="flex justify-center mb-4">
+              <img src={content.image} alt="Contact" className="w-32 h-32 object-cover rounded-full shadow" />
+            </div>
+          )}
+
           <div className="flex items-center gap-4 bg-white py-2">
             <div className="bg-[#f0f2f5] text-[#111518] rounded-lg flex items-center justify-center w-12 h-12">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
@@ -57,7 +76,7 @@ const ContactPage = () => {
             </div>
             <div>
               <p className="text-[#111518] font-medium">Email</p>
-              <p className="text-sm text-[#60768a]">support@teachadvise.com</p>
+              <p className="text-sm text-[#60768a]">{content.email}</p>
             </div>
           </div>
 
@@ -69,21 +88,38 @@ const ContactPage = () => {
             </div>
             <div>
               <p className="text-[#111518] font-medium">Phone</p>
-              <p className="text-sm text-[#60768a]">+1 (555) 123-4567</p>
+              <p className="text-sm text-[#60768a]">{content.phone}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 bg-white py-2">
-            <div className="bg-[#f0f2f5] text-[#111518] rounded-lg flex items-center justify-center w-12 h-12">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-                <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z" />
-              </svg>
+          {content.address && (
+            <div className="flex items-center gap-4 bg-white py-2">
+              <div className="bg-[#f0f2f5] text-[#111518] rounded-lg flex items-center justify-center w-12 h-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M128,24A72,72,0,0,0,56,96c0,57.43,64,127.09,66.74,129.89a8,8,0,0,0,11.52,0C136,223.09,200,153.43,200,96A72,72,0,0,0,128,24Zm0,96a24,24,0,1,1,24-24A24,24,0,0,1,128,120Z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[#111518] font-medium">Address</p>
+                <p className="text-sm text-[#60768a]">{content.address}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[#111518] font-medium">Address</p>
-              <p className="text-sm text-[#60768a]">123 Career Street, Suite 456, New York, NY 10001</p>
+          )}
+
+          {content.mapEmbedUrl && (
+            <div className="mt-6">
+              <iframe
+                src={content.mapEmbedUrl}
+                title="Location Map"
+                width="100%"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

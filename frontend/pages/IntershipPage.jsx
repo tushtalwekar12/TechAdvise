@@ -1,40 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInternships } from '../features/internships/internshipSlice';
-
-const faqData = [
-  {
-    question: 'What are the eligibility requirements?',
-    answer: `We welcome applications from students currently enrolled in undergraduate or graduate programs, as well as recent graduates (within 1 year). Strong academic performance, relevant coursework, and a passion for learning are key requirements. Some positions may have specific technical prerequisites which are listed in the job description.`
-  },
-  {
-    question: 'How long do internships typically last?',
-    answer: `Our internship durations are flexible to accommodate different academic schedules. We offer 30-day, 45-day, 90-day, and 180-day programs. Most interns choose 90-day programs as they provide the optimal balance of learning and project contribution. Longer internships often lead to more substantial projects and potential full-time opportunities.`
-  },
-  {
-    question: 'Are internships paid?',
-    answer: `Our internships are unpaid positions focused on providing valuable learning experiences, mentorship, and industry exposure. While we don't offer monetary compensation, we provide comprehensive benefits including training programs, networking opportunities, certificates, and potential full-time job offers for outstanding performers.`
-  },
-  {
-    question: 'Can I work remotely?',
-    answer: `We offer flexible work arrangements including remote, hybrid, and on-site options. Most of our internships can be completed remotely with proper communication tools and regular check-ins. We provide all necessary software licenses and equipment for remote work.`
-  },
-  {
-    question: 'What happens after the internship?',
-    answer: `Outstanding interns often receive full-time job offers upon completion. We maintain strong relationships with our alumni and provide networking opportunities, references, and ongoing career support. Many former interns have gone on to successful careers both within and outside our organization.`
-  },
-  {
-    question: 'How do I apply?',
-    answer: `Simply click the "Apply Now" button on any internship listing that interests you. You'll need to submit a resume, cover letter, and any relevant portfolio materials. We review applications on a rolling basis and typically respond within 1-2 weeks. Make sure to highlight relevant coursework, projects, and skills in your application.`
-  },
-];
+import { fetchFAQs } from '../features/faq/faqSlice';
 
 const InternshipPage = () => {
   const dispatch = useDispatch();
   const { items: internshipData, loading, error } = useSelector(state => state.internships);
+  const { items: faqs, loading: faqLoading, error: faqError } = useSelector(state => state.faq);
 
   useEffect(() => {
     dispatch(fetchInternships());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchFAQs());
   }, [dispatch]);
 
   const [selectedDomain, setSelectedDomain] = useState('');
@@ -388,7 +367,7 @@ const InternshipPage = () => {
                          </div>
                         <div>
                           <p className="text-gray-500">Duration</p>
-                          <p className="font-medium text-gray-900">{item.duration.join(', ')} days</p>
+                          <p className="font-medium text-gray-900">{Array.isArray(item.duration) ? item.duration.join(', ') : item.duration || '-'} days</p>
                         </div>
                         <div>
                           <p className="text-gray-500">Deadline</p>
@@ -530,10 +509,11 @@ const InternshipPage = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
           <p className="text-lg text-gray-600">Everything you need to know about our internship program</p>
         </div>
-        
+        {faqLoading && <div>Loading FAQs...</div>}
+        {faqError && <div className="text-red-600">Error: {faqError}</div>}
         <div className="space-y-6">
-          {faqData.map((faq, idx) => (
-            <div key={idx} className="bg-white rounded-2xl shadow-lg">
+          {faqs && faqs.length > 0 ? faqs.map((faq, idx) => (
+            <div key={faq._id || idx} className="bg-white rounded-2xl shadow-lg">
               <button
                 className="w-full flex items-center justify-between p-6 focus:outline-none"
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
@@ -559,7 +539,9 @@ const InternshipPage = () => {
                 </div>
               )}
             </div>
-          ))}
+          )) : !faqLoading && !faqError ? (
+            <div>No FAQs found.</div>
+          ) : null}
         </div>
 
         {/* Contact Section */}

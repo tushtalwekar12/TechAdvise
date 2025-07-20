@@ -14,6 +14,12 @@ import quoteRoutes from './routes/quoteRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
 import rateLimit from 'express-rate-limit';
 import mcache from 'memory-cache';
+import servicePageRoutes from './routes/servicePageRoutes.js';
+import aboutPageRoutes from './routes/aboutPageRoutes.js';
+import resourceRoutes from './routes/resourceRoutes.js';
+import highlightRoutes from './routes/highlightRoutes.js';
+import heroSectionRoutes from './routes/heroSectionRoutes.js';
+import contactInfoRoutes from './routes/contactInfoRoutes.js';
 
 
 dotenv.config();
@@ -39,8 +45,14 @@ app.use('/api/blog', blogRoutes);
 app.use('/api/internships', internshipRoutes);
 app.use('/api/subscribe', subscriptionRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/contact-info', contactInfoRoutes);
 app.use('/api/quotes', quoteRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/service-page', servicePageRoutes);
+app.use('/api/about-page', aboutPageRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/highlights', highlightRoutes);
+app.use('/api/hero-section', heroSectionRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).json({
