@@ -322,7 +322,7 @@ const InternshipPage = () => {
           ) : (
             paginated.map((item) => (
               <div 
-                key={item.id} 
+                key={item.id || item._id} 
                 className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="p-6">
@@ -361,10 +361,10 @@ const InternshipPage = () => {
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                                                 <div>
-                           <p className="text-gray-500">Compensation</p>
-                           <p className="font-medium text-gray-900">{item.salary}</p>
-                         </div>
+                        <div>
+                          <p className="text-gray-500">Compensation</p>
+                          <p className="font-medium text-gray-900">{item.salary}</p>
+                        </div>
                         <div>
                           <p className="text-gray-500">Duration</p>
                           <p className="font-medium text-gray-900">{Array.isArray(item.duration) ? item.duration.join(', ') : item.duration || '-'} days</p>
@@ -389,7 +389,7 @@ const InternshipPage = () => {
                             <h4 className="font-semibold text-gray-900 mb-2">Requirements:</h4>
                             <ul className="list-disc list-inside space-y-1 text-gray-700">
                               {item.requirements.map((req, index) => (
-                                <li key={index}>{req}</li>
+                                <li key={req + index}>{req}</li>
                               ))}
                             </ul>
                           </div>
@@ -397,7 +397,7 @@ const InternshipPage = () => {
                             <h4 className="font-semibold text-gray-900 mb-2">Benefits:</h4>
                             <ul className="list-disc list-inside space-y-1 text-gray-700">
                               {item.benefits.map((benefit, index) => (
-                                <li key={index}>{benefit}</li>
+                                <li key={benefit + index}>{benefit}</li>
                               ))}
                             </ul>
                           </div>
@@ -424,7 +424,8 @@ const InternshipPage = () => {
                     <div className="lg:w-64 lg:flex-shrink-0">
                       <div 
                         className="w-full h-48 rounded-xl bg-cover bg-center shadow-md"
-                        style={{ backgroundImage: `url(${item.image})` }}
+                        style={{ backgroundImage: `url(${item.image || '/default-avatar.png'})` }}
+                        onError={e => { e.target.style.backgroundImage = `url('/default-avatar.png')`; }}
                       />
                     </div>
                   </div>
@@ -466,7 +467,7 @@ const InternshipPage = () => {
                   if (isCurrent || isNearCurrent || isFirstOrLast) {
                     return (
                       <button
-                        key={i}
+                        key={pageNum}
                         className={`px-3 py-2 text-sm font-medium rounded-lg ${
                           isCurrent 
                             ? 'bg-blue-600 text-white' 
@@ -478,7 +479,7 @@ const InternshipPage = () => {
                       </button>
                     );
                   } else if (pageNum === currentPage - 2 || pageNum === currentPage + 2) {
-                    return <span key={i} className="px-2 py-2 text-gray-500">...</span>;
+                    return <span key={`ellipsis-${pageNum}`} className="px-2 py-2 text-gray-500">...</span>;
                   }
                   return null;
                 })}
@@ -513,7 +514,7 @@ const InternshipPage = () => {
         {faqError && <div className="text-red-600">Error: {faqError}</div>}
         <div className="space-y-6">
           {faqs && faqs.length > 0 ? faqs.map((faq, idx) => (
-            <div key={faq._id || idx} className="bg-white rounded-2xl shadow-lg">
+            <div key={faq._id || `faq-${idx}`} className="bg-white rounded-2xl shadow-lg">
               <button
                 className="w-full flex items-center justify-between p-6 focus:outline-none"
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Slider from "react-slick";
 import { Star, BadgeCheck, Quote } from "lucide-react";
 import "slick-carousel/slick/slick.css";
@@ -49,6 +49,8 @@ const TestimonialSection = () => {
     ],
   };
 
+  const memoizedTestimonials = useMemo(() => testimonials, [testimonials]);
+
   return (
     <section className="px-4 md:px-10 lg:px-20 pt-10 pb-16">
       <h2 className="text-center text-3xl font-bold text-[#111518] mb-10">
@@ -62,7 +64,7 @@ const TestimonialSection = () => {
         <p className="text-center">No testimonials found.</p>
       ) : (
         <Slider {...settings}>
-          {testimonials.map((item, idx) => (
+          {memoizedTestimonials.map((item, idx) => (
             <div key={item._id || idx} className="flex justify-center px-2 pb-10">
               <div className="relative bg-white rounded-xl shadow-2xl border border-blue-100 p-5 max-w-xs w-full mt-10 transform transition-transform hover:scale-105">
                 {/* Quote Icon in Background */}
@@ -71,9 +73,10 @@ const TestimonialSection = () => {
                 {/* Profile Image */}
                 <div className="absolute -top-8 left-6">
                   <img
-                    src={item.image}
+                    src={item.image || '/default-avatar.png'}
                     alt={item.name}
                     className="w-14 h-14 rounded-full border-4 border-white shadow-md object-cover"
+                    onError={e => { e.target.onerror = null; e.target.src = '/default-avatar.png'; }}
                   />
                 </div>
 

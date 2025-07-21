@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Trophy, Users, Headset, TrendUp } from "phosphor-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServicePageContent } from '../features/servicePage/servicePageSlice';
@@ -25,11 +25,21 @@ const ServicePage = () => {
     dispatch(fetchFAQs());
   }, [dispatch]);
 
+  // Always call hooks before any early return
+  const hero = content?.hero;
+  const services = content?.services;
+  const benefits = content?.benefits;
+  const processSteps = content?.processSteps;
+  const cta = content?.cta;
+
+  const memoizedServices = useMemo(() => services || [], [services]);
+  const memoizedBenefits = useMemo(() => benefits || [], [benefits]);
+  const memoizedProcessSteps = useMemo(() => processSteps || [], [processSteps]);
+  const memoizedFaqs = useMemo(() => faqs || [], [faqs]);
+
   if (loading) return <div className="flex justify-center items-center min-h-screen">Loading service page...</div>;
   if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
   if (!content) return null;
-
-  const { hero, services, benefits, processSteps, cta } = content;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -59,7 +69,7 @@ const ServicePage = () => {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              {services && services.map((service, idx) => (
+              {memoizedServices.map((service, idx) => (
                 <div key={idx} className="border border-[#dbe1e6] bg-white p-6 rounded-xl flex flex-col gap-4 hover:shadow-xl hover:border-[#1383eb] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group">
                   <div className="text-[#1383eb] text-3xl group-hover:scale-110 transition-transform duration-300">
                     {ICON_MAP[service.icon] || <i className="ph ph-briefcase"></i>}
@@ -84,7 +94,7 @@ const ServicePage = () => {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {benefits && benefits.map((benefit, idx) => (
+              {memoizedBenefits.map((benefit, idx) => (
                 <div key={idx} className="border border-[#dbe1e6] bg-white p-6 rounded-xl flex flex-col items-center text-center gap-4 hover:shadow-lg transition-all duration-300">
                   <div className="text-[#1383eb] text-4xl bg-blue-50 p-4 rounded-full">
                     {ICON_MAP[benefit.icon] || <Trophy size={40} color="#1383eb" />}
@@ -105,7 +115,7 @@ const ServicePage = () => {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {processSteps && processSteps.map((step, idx) => (
+              {memoizedProcessSteps.map((step, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-[#1383eb] text-white text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     {idx + 1}
@@ -141,9 +151,9 @@ const ServicePage = () => {
               <p className="text-center">Loading FAQs...</p>
             ) : faqError ? (
               <p className="text-center text-red-600">{faqError.message || faqError}</p>
-            ) : faqs && faqs.length > 0 ? (
+            ) : memoizedFaqs && memoizedFaqs.length > 0 ? (
               <div className="max-w-2xl mx-auto">
-                {faqs.map((faq, idx) => (
+                {memoizedFaqs.map((faq, idx) => (
                   <div key={faq._id || idx} className="mb-4 border rounded bg-white p-4">
                     <div className="font-semibold text-[#111518] mb-2">Q: {faq.question}</div>
                     <div className="text-[#617689]">A: {faq.answer}</div>

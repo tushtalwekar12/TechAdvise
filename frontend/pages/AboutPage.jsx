@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAboutPageContent } from '../features/aboutPage/aboutPageSlice';
 
@@ -15,6 +15,7 @@ const AboutPage = () => {
   if (!content) return null;
 
   const { mission, values, team, contact } = content;
+  const memoizedTeam = useMemo(() => team || [], [team]);
 
   return (
     <div className="px-4 md:px-20 lg:px-40 py-10">
@@ -38,15 +39,16 @@ const AboutPage = () => {
         )}
 
         {/* Team */}
-        {team && team.length > 0 && (
+        {memoizedTeam && memoizedTeam.length > 0 && (
           <section>
             <h2 className="text-[22px] font-bold text-[#121416] px-2 pb-3">Meet Our Team</h2>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-6 px-2">
-              {team.map((member, index) => (
+              {memoizedTeam.map((member, index) => (
                 <div key={index} className="flex flex-col items-center text-center gap-2">
                   <div
                     className="w-24 h-24 rounded-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${member.image})` }}
+                    style={{ backgroundImage: `url(${member.image || '/default-avatar.png'})` }}
+                    onError={e => { e.target.style.backgroundImage = `url('/default-avatar.png')`; }}
                   ></div>
                   <p className="text-[#121416] text-base font-medium">{member.name}</p>
                   <p className="text-[#6a7681] text-sm">{member.role}</p>

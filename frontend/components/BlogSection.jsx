@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlogs } from "../features/blogs/blogSlice";
 
@@ -10,6 +10,8 @@ const BlogSection = () => {
     dispatch(fetchBlogs());
   }, [dispatch]);
 
+  const memoizedArticles = useMemo(() => blogArticles || [], [blogArticles]);
+
   return (
     <section className="px-4 md:px-10 lg:px-20 pt-10 pb-16">
       <h2 className="text-[#111518] text-2xl font-bold leading-tight tracking-tight mb-6">
@@ -17,8 +19,8 @@ const BlogSection = () => {
       </h2>
       {loading && <div>Loading blogs...</div>}
       {error && <div className="text-red-600">Error: {error}</div>}
-      {blogArticles && blogArticles.length > 0 ? (
-        blogArticles.map((article, index) => (
+      {memoizedArticles && memoizedArticles.length > 0 ? (
+        memoizedArticles.map((article, index) => (
           <div
             key={article._id || index}
             className="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-xl py-4 px-8 bg-white shadow-md mb-6"
@@ -41,9 +43,10 @@ const BlogSection = () => {
             {/* Image */}
             <div className="w-full md:w-64">
               <img
-                src={article.imageUrl}
+                src={article.imageUrl || '/default-avatar.png'}
                 alt={article.title}
                 className="rounded-xl w-full aspect-video object-cover"
+                onError={e => { e.target.onerror = null; e.target.src = '/default-avatar.png'; }}
               />
             </div>
           </div>
