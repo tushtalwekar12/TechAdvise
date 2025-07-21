@@ -87,7 +87,7 @@ const ServicePage = () => {
           {/* Why Choose Us */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-[#111518] text-3xl md:text-4xl font-bold mb-4">Why Choose TechSolutions?</h2>
+              <h2 className="text-[#111518] text-3xl md:text-4xl font-bold mb-4">Why Choose TechAdvise?</h2>
               <p className="text-[#617689] text-lg max-w-3xl mx-auto leading-relaxed">
                 We don't just deliver services – we deliver results. Our proven track record and commitment to excellence 
                 make us the trusted partner for businesses looking to accelerate their digital transformation.
@@ -134,7 +134,7 @@ const ServicePage = () => {
               <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed">{cta.subtitle}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 {cta.buttons && cta.buttons.map((btn, idx) => (
-                  <button key={idx} className={`bg-white text-[#1383eb] font-bold rounded-xl px-8 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg ${idx > 0 ? 'border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#1383eb]' : ''}`}>
+                  <button key={idx} className={`bg-white text-[#1383eb] font-bold rounded-xl px-8 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg ${idx > 0 ? 'border-2 border-white bg-transparent text-black hover:bg-white hover:text-[#1383eb]' : ''}`}>
                     {btn.label}
                   </button>
                 ))}
