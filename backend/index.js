@@ -21,6 +21,7 @@ import highlightRoutes from './routes/highlightRoutes.js';
 import heroSectionRoutes from './routes/heroSectionRoutes.js';
 import contactInfoRoutes from './routes/contactInfoRoutes.js';
 import footerRoutes from './routes/footerRoutes.js';
+import faqRoutes from './routes/faqRoutes.js';
 
 
 dotenv.config();
@@ -55,6 +56,7 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/highlights', highlightRoutes);
 app.use('/api/hero-section', heroSectionRoutes);
 app.use('/api/footer-content', footerRoutes);
+app.use('/api/faqs', faqRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).json({

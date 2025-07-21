@@ -13,6 +13,18 @@ export const fetchContactInfo = createAsyncThunk(
   }
 );
 
+export const updateContactInfo = createAsyncThunk(
+  'contactInfo/updateContactInfo',
+  async (infoData, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/api/contact-info', infoData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const contactInfoSlice = createSlice({
   name: 'contactInfo',
   initialState: {
@@ -34,6 +46,10 @@ const contactInfoSlice = createSlice({
       .addCase(fetchContactInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Update Contact Info
+      .addCase(updateContactInfo.fulfilled, (state, action) => {
+        state.content = action.payload.data;
       });
   },
 });

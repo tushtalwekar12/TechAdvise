@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Trophy, Users, Headset, TrendUp } from "phosphor-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServicePageContent } from '../features/servicePage/servicePageSlice';
+import { fetchFAQs } from '../features/faq/faqSlice';
 
 const ICON_MAP = {
   'briefcase': <i className="ph ph-briefcase"></i>,
@@ -17,9 +18,11 @@ const ICON_MAP = {
 const ServicePage = () => {
   const dispatch = useDispatch();
   const { content, loading, error } = useSelector(state => state.servicePage);
+  const { items: faqs, loading: faqLoading, error: faqError } = useSelector(state => state.faq);
 
   useEffect(() => {
     dispatch(fetchServicePageContent());
+    dispatch(fetchFAQs());
   }, [dispatch]);
 
   if (loading) return <div className="flex justify-center items-center min-h-screen">Loading service page...</div>;
@@ -128,6 +131,29 @@ const ServicePage = () => {
               </div>
             </section>
           )}
+
+          {/* FAQ Section */}
+          <section className="mb-20">
+            <div className="text-center mb-12">
+              <h2 className="text-[#111518] text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            </div>
+            {faqLoading ? (
+              <p className="text-center">Loading FAQs...</p>
+            ) : faqError ? (
+              <p className="text-center text-red-600">{faqError.message || faqError}</p>
+            ) : faqs && faqs.length > 0 ? (
+              <div className="max-w-2xl mx-auto">
+                {faqs.map((faq, idx) => (
+                  <div key={faq._id || idx} className="mb-4 border rounded bg-white p-4">
+                    <div className="font-semibold text-[#111518] mb-2">Q: {faq.question}</div>
+                    <div className="text-[#617689]">A: {faq.answer}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">No FAQs found.</p>
+            )}
+          </section>
         </div>
       </div>
     </div>

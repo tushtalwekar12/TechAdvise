@@ -13,6 +13,42 @@ export const fetchFAQs = createAsyncThunk(
   }
 );
 
+export const createFAQ = createAsyncThunk(
+  'faq/createFAQ',
+  async (faqData, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/api/faqs', faqData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const updateFAQ = createAsyncThunk(
+  'faq/updateFAQ',
+  async ({ id, faqData }, { rejectWithValue }) => {
+    try {
+      const response = await api.put(`/api/faqs/${id}`, faqData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const deleteFAQ = createAsyncThunk(
+  'faq/deleteFAQ',
+  async (id, { rejectWithValue }) => {
+    try {
+      await api.delete(`/api/faqs/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const faqSlice = createSlice({
   name: 'faq',
   initialState: {
@@ -34,6 +70,19 @@ const faqSlice = createSlice({
       .addCase(fetchFAQs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Create FAQ
+      .addCase(createFAQ.fulfilled, (state, action) => {
+        state.items.unshift(action.payload.data);
+      })
+      // Update FAQ
+      .addCase(updateFAQ.fulfilled, (state, action) => {
+        const idx = state.items.findIndex(f => f._id === action.payload.data._id);
+        if (idx !== -1) state.items[idx] = action.payload.data;
+      })
+      // Delete FAQ
+      .addCase(deleteFAQ.fulfilled, (state, action) => {
+        state.items = state.items.filter(f => f._id !== action.payload);
       });
   },
 });

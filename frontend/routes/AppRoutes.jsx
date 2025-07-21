@@ -25,6 +25,8 @@ import AdminHeroPage from '../pages/admin/AdminHeroPage';
 import AdminContactInfoPage from '../pages/admin/AdminContactInfoPage';
 import AdminFooterPage from '../pages/admin/AdminFooterPage';
 import AdminFAQPage from '../pages/admin/AdminFAQPage';
+import AdminQuotesPage from '../pages/admin/AdminQuotesPage';
+import AdminContactPage from '../pages/admin/AdminContactPage';
 
 const AppRoutes = () => (
   <Routes>
@@ -58,6 +60,8 @@ const AppRoutes = () => (
       <Route path="contact" element={<AdminContactInfoPage />} />
       <Route path="footer" element={<AdminFooterPage />} />
       <Route path="faq" element={<AdminFAQPage />} />
+      <Route path="quotes" element={<AdminQuotesPage />} />
+      <Route path="contact-forms" element={<AdminContactPage />} />
     </Route>
   </Routes>
 );

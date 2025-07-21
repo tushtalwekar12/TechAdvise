@@ -26,7 +26,7 @@ router.post(
 
 // Protected routes (Admin only)
 router.use(protect);
-router.use(authorize('admin'));
+router.use(authorize('admin', 'superadmin'));
 
 router.get('/', getQuotes);
 router.get('/:id', getQuote);
