@@ -76,6 +76,12 @@
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-21 09:06:12"}
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-21 13:07:53"}
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-21 13:57:56"}
+<<<<<<< HEAD
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-22 19:44:01"}
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-22 20:44:40"}
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-22 20:49:52"}
+=======
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-21 18:52:34"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-21 19:59:16"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-07-22 10:26:19"}
+>>>>>>> 3a20c583194d3c0fdc6f1b5690b6b8941ca4432d
