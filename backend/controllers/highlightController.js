@@ -13,8 +13,8 @@ export const getAllHighlights = async (req, res) => {
 // Create a new highlight
 export const createHighlight = async (req, res) => {
   try {
-    const { title, description, icon } = req.body;
-    const highlight = new Highlight({ title, description, icon });
+    const { title, label, description, icon } = req.body;
+    const highlight = new Highlight({ title, label, description, icon });
     await highlight.save();
     res.status(201).json({ success: true, message: 'Highlight created', data: highlight });
   } catch (error) {
@@ -25,7 +25,11 @@ export const createHighlight = async (req, res) => {
 // Update a highlight
 export const updateHighlight = async (req, res) => {
   try {
-    const highlight = await Highlight.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const highlight = await Highlight.findByIdAndUpdate(
+      req.params.id,
+      req.body, // req.body can now include 'label'
+      { new: true }
+    );
     if (!highlight) {
       return res.status(404).json({ success: false, message: 'Highlight not found' });
     }
