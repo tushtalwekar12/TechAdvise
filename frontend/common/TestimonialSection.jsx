@@ -3,30 +3,19 @@ import Slider from "react-slick";
 import { Star, BadgeCheck, Quote } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTestimonials } from "../features/testimonials/testimonialSlice";
 
 const TestimonialSection = () => {
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+  const { items: testimonials, loading, error } = useSelector(
+    (state) => state.testimonials
+  );
 
   useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const res = await fetch("/api/testimonials");
-        const data = await res.json();
-        if (data.success) {
-          setTestimonials(data.data);
-        } else {
-          setError(data.message || "Failed to load testimonials.");
-        }
-      } catch (err) {
-        setError("Failed to load testimonials.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTestimonials();
-  }, []);
+    dispatch(fetchTestimonials());
+  }, [dispatch]);
 
   const settings = {
     dots: true,
