@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHighlights, createHighlight, updateHighlight, deleteHighlight } from '../../features/highlights/highlightsSlice';
 
-const initialForm = { title: '', description: '', icon: '' };
+const initialForm = { title: '', label: '', description: '', icon: '' };
 
 const AdminHighlightsPage = () => {
   const dispatch = useDispatch();
@@ -27,6 +27,10 @@ const AdminHighlightsPage = () => {
       setFormError('Title is required.');
       return;
     }
+    if (!form.label.trim()) {
+      setFormError('Label is required.');
+      return;
+    }
     if (editingId) {
       const result = await dispatch(updateHighlight({ id: editingId, highlightData: form }));
       if (result.error) {
@@ -49,6 +53,7 @@ const AdminHighlightsPage = () => {
   const handleEdit = highlight => {
     setForm({
       title: highlight.title,
+      label: highlight.label || '',
       description: highlight.description || '',
       icon: highlight.icon || '',
     });
@@ -84,6 +89,14 @@ const AdminHighlightsPage = () => {
           />
           <input
             className="block mb-2 p-2 w-full border rounded"
+            name="label"
+            placeholder="Label (e.g. IT Services)"
+            value={form.label}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="block mb-2 p-2 w-full border rounded"
             name="icon"
             placeholder="Icon name or URL (optional)"
             value={form.icon}
@@ -113,6 +126,7 @@ const AdminHighlightsPage = () => {
         <thead>
           <tr className="bg-gray-200">
             <th className="p-2 border">Title</th>
+            <th className="p-2 border">Label</th>
             <th className="p-2 border">Icon</th>
             <th className="p-2 border">Description</th>
             <th className="p-2 border">Actions</th>
@@ -122,6 +136,7 @@ const AdminHighlightsPage = () => {
           {highlights && highlights.length > 0 ? highlights.map(highlight => (
             <tr key={highlight._id} className="border-b">
               <td className="p-2 border">{highlight.title}</td>
+              <td className="p-2 border">{highlight.label || '—'}</td>
               <td className="p-2 border">{highlight.icon ? (
                 highlight.icon.startsWith('http') ? <img src={highlight.icon} alt="icon" className="h-8 inline" /> : highlight.icon
               ) : '—'}</td>
@@ -132,7 +147,7 @@ const AdminHighlightsPage = () => {
               </td>
             </tr>
           )) : (
-            <tr><td colSpan="4" className="text-center p-4">No highlights found.</td></tr>
+            <tr><td colSpan="5" className="text-center p-4">No highlights found.</td></tr>
           )}
         </tbody>
       </table>

@@ -87,7 +87,7 @@ const ServicePage = () => {
           {/* Why Choose Us */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-[#111518] text-3xl md:text-4xl font-bold mb-4">Why Choose TechAdvise?</h2>
+              <h2 className="text-[#111518] text-3xl md:text-4xl font-bold mb-4">Why Choose TechSolutions?</h2>
               <p className="text-[#617689] text-lg max-w-3xl mx-auto leading-relaxed">
                 We don't just deliver services – we deliver results. Our proven track record and commitment to excellence 
                 make us the trusted partner for businesses looking to accelerate their digital transformation.

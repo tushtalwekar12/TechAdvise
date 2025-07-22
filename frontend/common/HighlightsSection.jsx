@@ -32,6 +32,9 @@ const HighlightsSection = () => {
               <div className="text-[#1383eb] text-4xl bg-blue-50 p-4 rounded-full">
                 {ICON_MAP[highlight.icon] || <Trophy size={40} color="#1383eb" />}
               </div>
+              {highlight.label && (
+                <div className="text-sm font-medium text-gray-500 mb-1">{highlight.label}</div>
+              )}
               <h3 className="text-[#111518] text-lg font-bold leading-tight">{highlight.title}</h3>
               <p className="text-[#617689] text-sm leading-relaxed">{highlight.description}</p>
             </div>
