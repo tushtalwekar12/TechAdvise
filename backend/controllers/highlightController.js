@@ -13,8 +13,8 @@ export const getAllHighlights = async (req, res) => {
 // Create a new highlight
 export const createHighlight = async (req, res) => {
   try {
-    const { title, description, icon } = req.body;
-    const highlight = new Highlight({ title, description, icon });
+    const { title,label, description, icon } = req.body;
+    const highlight = new Highlight({ title,label, description, icon });
     await highlight.save();
     res.status(201).json({ success: true, message: 'Highlight created', data: highlight });
   } catch (error) {

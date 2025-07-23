@@ -29,6 +29,7 @@ const AdminDashboard = () => {
           <Link to="/admin/dashboard/faq" className="hover:text-blue-600">FAQ</Link>
           <Link to="/admin/dashboard/quotes" className="hover:text-blue-600">Quotes</Link>
           <Link to="/admin/dashboard/contact-forms" className="hover:text-blue-600">Contact Submissions</Link>
+           <Link to="/admin/dashboard/intership-page" className="hover:text-blue-600">Intership Form</Link> 
         </nav>
         <button onClick={handleLogout} className="mt-8 bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600">Logout</button>
       </aside>
