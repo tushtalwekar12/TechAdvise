@@ -1,2 +1,4 @@
+backend/logs/
+*.log
+
 .env
-combined.log

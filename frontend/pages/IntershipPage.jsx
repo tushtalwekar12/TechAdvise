@@ -230,7 +230,7 @@ const InternshipPage = () => {
                 </div>
 
                 {/* Duration Filter */}
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
                   <div className="flex flex-wrap gap-2">
                     <button
@@ -257,7 +257,7 @@ const InternshipPage = () => {
                       </button>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 {/* Location Filter */}
                 <div>
@@ -376,10 +376,10 @@ const InternshipPage = () => {
                             <p className="text-gray-500">Compensation</p>
                             <p className="font-medium text-gray-900">{item.salary}</p>
                           </div>
-                          <div>
+                          {/* <div>
                             <p className="text-gray-500">Duration</p>
                             <p className="font-medium text-gray-900">{Array.isArray(item.duration) ? item.duration.join(', ') : item.duration || '-'} days</p>
-                          </div>
+                          </div> */}
                           <div>
                             <p className="text-gray-500">Deadline</p>
                             <p className="font-medium text-gray-900">{formatDate(item.deadline)}</p>
@@ -432,13 +432,13 @@ const InternshipPage = () => {
                       </div>
 
                       {/* Image */}
-                      <div className="lg:w-64 lg:flex-shrink-0">
+                      {/* <div className="lg:w-64 lg:flex-shrink-0">
                         <div 
                           className="w-full h-48 rounded-xl bg-cover bg-center shadow-md"
                           style={{ backgroundImage: `url(${item.image || '/default-avatar.png'})` }}
                           onError={e => { e.target.style.backgroundImage = `url('/default-avatar.png')`; }}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -557,7 +557,7 @@ const InternshipPage = () => {
           </div>
 
           {/* Contact Section */}
-          <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
+          {/* <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
             <h3 className="text-2xl font-bold mb-4">Still Have Questions?</h3>
             <p className="text-lg mb-6 opacity-90">
               Our team is here to help you find the perfect internship opportunity
@@ -570,7 +570,7 @@ const InternshipPage = () => {
                 Schedule a Call
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
