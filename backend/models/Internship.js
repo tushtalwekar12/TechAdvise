@@ -21,10 +21,6 @@ const internshipSchema = new mongoose.Schema({
     type: [Number], // Array of numbers representing days
     required: true
   },
-  salary: {
-    type: String,
-    required: true
-  },
   deadline: {
     type: Date,
     required: true
@@ -49,10 +45,6 @@ const internshipSchema = new mongoose.Schema({
   benefits: {
     type: [String],
     required: true
-  },
-  image: {
-    type: String, // URL to the internship image
-    required: false
   },
   isActive: {
     type: Boolean,

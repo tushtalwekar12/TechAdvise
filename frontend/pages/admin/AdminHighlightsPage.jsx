@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHighlights, createHighlight, updateHighlight, deleteHighlight } from '../../features/highlights/highlightsSlice';
 
-const initialForm = { title: '', description: '', icon: '' };
+const initialForm = { title: '',label:'', description: '', icon: '' };
 
 const AdminHighlightsPage = () => {
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ const AdminHighlightsPage = () => {
   const handleEdit = highlight => {
     setForm({
       title: highlight.title,
+      label: highlight.label || '',
       description: highlight.description || '',
       icon: highlight.icon || '',
     });
@@ -89,6 +90,13 @@ const AdminHighlightsPage = () => {
             value={form.icon}
             onChange={handleChange}
           />
+            <input
+            className="block mb-2 p-2 w-full border rounded"
+            name="label"
+            placeholder="label name"
+            value={form.label}
+            onChange={handleChange}
+          />
           <textarea
             className="block mb-2 p-2 w-full border rounded"
             name="description"
@@ -113,6 +121,7 @@ const AdminHighlightsPage = () => {
         <thead>
           <tr className="bg-gray-200">
             <th className="p-2 border">Title</th>
+             <th className="p-2 border">Label</th>
             <th className="p-2 border">Icon</th>
             <th className="p-2 border">Description</th>
             <th className="p-2 border">Actions</th>
@@ -121,7 +130,8 @@ const AdminHighlightsPage = () => {
         <tbody>
           {highlights && highlights.length > 0 ? highlights.map(highlight => (
             <tr key={highlight._id} className="border-b">
-              <td className="p-2 border">{highlight.title}</td>
+              <td className="p-2 border">{highlight.title}</td> 
+              <td className="p-2 border">{highlight.label}</td> 
               <td className="p-2 border">{highlight.icon ? (
                 highlight.icon.startsWith('http') ? <img src={highlight.icon} alt="icon" className="h-8 inline" /> : highlight.icon
               ) : '—'}</td>

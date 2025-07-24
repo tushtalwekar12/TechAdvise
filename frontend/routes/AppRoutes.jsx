@@ -27,6 +27,7 @@ import AdminFooterPage from '../pages/admin/AdminFooterPage';
 import AdminFAQPage from '../pages/admin/AdminFAQPage';
 import AdminQuotesPage from '../pages/admin/AdminQuotesPage';
 import AdminContactPage from '../pages/admin/AdminContactPage';
+import AdminIntershipPage from '../pages/admin/AdminIntershipPage';
 
 const AppRoutes = () => (
   <Routes>
@@ -62,6 +63,7 @@ const AppRoutes = () => (
       <Route path="faq" element={<AdminFAQPage />} />
       <Route path="quotes" element={<AdminQuotesPage />} />
       <Route path="contact-forms" element={<AdminContactPage />} />
+      <Route path="intership-page" element={<AdminIntershipPage/>} />
     </Route>
   </Routes>
 );

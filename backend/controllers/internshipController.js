@@ -16,7 +16,6 @@ export const createInternship = async (req, res) => {
       description, 
       requirements, 
       benefits, 
-      image 
     } = req.body;
     
     const internship = new Internship({ 
@@ -32,7 +31,6 @@ export const createInternship = async (req, res) => {
       description, 
       requirements, 
       benefits, 
-      image 
     });
     
     await internship.save();
@@ -45,10 +43,10 @@ export const createInternship = async (req, res) => {
 // Get all internships
 export const getAllInternships = async (req, res) => {
   try {
-    const internships = await Internship.find();
-    res.status(200).json({ success: true, data: internships });
+    const internships = await Internship.find().sort({ createdAt: -1 });
+    res.json({ success: true, data: internships });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error', error: error.message });
+    res.status(500).json({ success: false, errors: error.message });
   }
 };
 

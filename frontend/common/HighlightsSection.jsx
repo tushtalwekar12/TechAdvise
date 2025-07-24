@@ -21,7 +21,7 @@ const HighlightsSection = () => {
   return (
     <section className="py-12 px-4 md:px-10 lg:px-20 bg-white">
       <h2 className="text-[#111518] text-2xl font-bold leading-tight tracking-tight mb-8 text-center">
-        Why Choose Us
+        Hightlights
       </h2>
       {loading && <div>Loading highlights...</div>}
       {error && <div className="text-red-600">Error: {error}</div>}
@@ -33,6 +33,7 @@ const HighlightsSection = () => {
                 {ICON_MAP[highlight.icon] || <Trophy size={40} color="#1383eb" />}
               </div>
               <h3 className="text-[#111518] text-lg font-bold leading-tight">{highlight.title}</h3>
+               <h3 className="text-[#111518] text-lg font-bold leading-tight">{highlight.label}</h3>
               <p className="text-[#617689] text-sm leading-relaxed">{highlight.description}</p>
             </div>
           ))}
