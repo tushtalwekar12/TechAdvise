@@ -8,6 +8,7 @@ const linkSchema = new mongoose.Schema({
 const socialSchema = new mongoose.Schema({
   platform: String,
   url: String,
+  icon: String
 }, { _id: false });
 
 const footerSchema = new mongoose.Schema({
