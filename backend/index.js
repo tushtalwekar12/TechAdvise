@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import xss from 'xss-clean';
+import hpp from 'hpp'
 import connectDB from './config/db.js';
 import logger from './utils/logger.js';
 import authRoutes from './routes/authRoutes.js';
@@ -33,6 +35,9 @@ app.use(express.json());
 // Security middleware
 app.use(helmet());
 app.use(cors());
+app.use(xss()); 
+app.use(hpp());
+
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -73,6 +78,7 @@ const contactLimiter = rateLimit({
   max: 5 // limit each IP to 5 requests per windowMs
 });
 
+
 const cache = duration => {
   return (req, res, next) => {
     const key = '__express__' + req.originalUrl;
@@ -92,6 +98,14 @@ const cache = duration => {
   };
 };
 
+// 404 handler for unknown routes
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   logger.error(err.stack);
@@ -106,4 +120,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+});  
+
