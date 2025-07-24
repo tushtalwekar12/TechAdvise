@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import xss from 'xss-clean';
+
 import hpp from 'hpp'
 import connectDB from './config/db.js';
 import logger from './utils/logger.js';
@@ -35,7 +35,7 @@ app.use(express.json());
 // Security middleware
 app.use(helmet());
 app.use(cors());
-app.use(xss()); 
+
 app.use(hpp());
 
 
