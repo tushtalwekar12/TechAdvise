@@ -15,7 +15,7 @@ const BlogSection = () => {
 
   return (
     <section className="px-4 md:px-10 lg:px-20 pt-10 pb-16">
-      <h2 className="text-[#111518] text-2xl font-bold leading-tight tracking-tight mb-6">
+      <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-8 text-center">
         Latest Blog Articles
       </h2>
 

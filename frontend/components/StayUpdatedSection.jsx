@@ -35,7 +35,7 @@ const StayUpdatedSection = () => {
     <section className="flex flex-col justify-end gap-6 px-4 py-10 md:gap-8 md:px-10 md:py-20 bg-white">
       {/* Heading + Description */}
       <div className="flex flex-col gap-2 text-center items-center">
-        <h2 className="text-[#111518] text-[32px] font-bold leading-tight md:text-4xl md:font-black md:tracking-[-0.033em] max-w-[720px]">
+        <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-8 text-center">
           Stay Updated
         </h2>
         <p className="text-[#111518] text-base font-normal leading-normal max-w-[720px]">
