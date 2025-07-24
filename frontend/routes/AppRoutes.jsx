@@ -28,6 +28,7 @@ import AdminFAQPage from '../pages/admin/AdminFAQPage';
 import AdminQuotesPage from '../pages/admin/AdminQuotesPage';
 import AdminContactPage from '../pages/admin/AdminContactPage';
 import AdminIntershipPage from '../pages/admin/AdminIntershipPage';
+import BlogDetailsPage from '../pages/BlogDetailsPage';
 
 const AppRoutes = () => (
   <Routes>
@@ -40,6 +41,8 @@ const AppRoutes = () => (
       <Route path="contact" element={<ContactPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+       <Route path="/blog/:id" element={<BlogDetailsPage />} />
+
     </Route>
     <Route path="/admin/login" element={<AdminLoginPage />} />
     <Route path="/admin/signup" element={<AdminSignupPage />} />

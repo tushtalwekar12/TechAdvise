@@ -49,14 +49,31 @@ export const deleteBlog = createAsyncThunk(
   }
 );
 
+export const fetchBlogById = createAsyncThunk(
+  'blogs/fetchBlogById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/api/blog/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const blogSlice = createSlice({
   name: 'blogs',
   initialState: {
     items: [],
+    selected: null,
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    clearSelectedBlog: (state) => {
+    state.selected = null;
+  }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBlogs.pending, (state) => {
@@ -83,8 +100,21 @@ const blogSlice = createSlice({
       // Delete Blog
       .addCase(deleteBlog.fulfilled, (state, action) => {
         state.items = state.items.filter(b => b._id !== action.payload);
+      })
+      .addCase(fetchBlogById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBlogById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selected = action.payload.data;
+      })
+      .addCase(fetchBlogById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearSelectedBlog } = blogSlice.actions;
 export default blogSlice.reducer; 
