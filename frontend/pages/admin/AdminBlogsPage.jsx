@@ -7,7 +7,7 @@ const CLOUDINARY_CLOUD_NAME = 'dflmcqecg';
 const CLOUDINARY_UPLOAD_PRESET = 'unsigned_upload';
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`;
 
-const initialForm = { title: '', description: '', imageUrl: '' };
+const initialForm = { title: '', description: '', imageUrl: '' ,author:''};
 
 const AdminBlogsPage = () => {
   const dispatch = useDispatch();
@@ -146,9 +146,17 @@ const AdminBlogsPage = () => {
             onChange={handleImageChange}
             disabled={uploading}
           />
-          {uploading && <p className="text-blue-600 font-medium">Uploading image...</p>}
-          {uploadError && <p className="text-red-600 font-medium">{uploadError}</p>}
-          {formError && <p className="text-red-600 font-medium">{formError}</p>}
+                    <input
+            className="block mb-2 p-2 w-full border rounded"
+            name="author"
+            placeholder="Author"
+            value={form.author}
+            onChange={handleChange}
+            required
+          />
+          {uploading && <p className="text-blue-600">Uploading image...</p>}
+          {uploadError && <p className="text-red-600">{uploadError}</p>}
+          {formError && <p className="text-red-600">{formError}</p>}
           {(imagePreview || form.imageUrl) && (
             <img src={imagePreview || form.imageUrl} alt="Preview" className="h-32 rounded-xl object-cover shadow-md" />
           )}
@@ -170,51 +178,35 @@ const AdminBlogsPage = () => {
           </div>
         </form>
       )}
-
-      {loading && <p className="text-gray-600 font-medium">Loading blogs...</p>}
-      {reduxError && <p className="text-red-600 font-medium">{reduxError.message || reduxError}</p>}
-
-      <div className="overflow-x-auto bg-white rounded-2xl shadow-xl border border-gray-200">
-        <table className="min-w-full text-left text-sm">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-xs tracking-wider">
-            <tr>
-              <th className="p-4">Title</th>
-              <th className="p-4">Description</th>
-              <th className="p-4">Image</th>
-              <th className="p-4 text-center">Actions</th>
+      {loading && <p>Loading...</p>}
+      {reduxError && <p className="text-red-600">{reduxError.message || reduxError}</p>}
+      <table className="w-full border mt-4">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="p-2 border">Title</th>
+            <th className="p-2 border">Description</th>
+            <th className="p-2 border">Image</th>
+             <th className="p-2 border">Author</th>
+            <th className="p-2 border">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {blogs && blogs.length > 0 ? blogs.map(blog => (
+            <tr key={blog._id} className="border-b">
+              <td className="p-2 border">{blog.title}</td>
+              <td className="p-2 border">{blog.description}</td>
+              <td className="p-2 border">{blog.imageUrl ? <img src={blog.imageUrl} alt="" className="h-12" /> : '—'}</td>
+               <td className="p-2 border">{blog.author}</td>
+              <td className="p-2 border">
+                <button className="mr-2 px-2 py-1 bg-yellow-500 text-white rounded" onClick={() => handleEdit(blog)}>Edit</button>
+                <button className="px-2 py-1 bg-red-600 text-white rounded" onClick={() => handleDelete(blog._id)}>Delete</button>
+              </td>
             </tr>
-          </thead>
-          <tbody className="text-gray-800">
-            {blogs && blogs.length > 0 ? blogs.map(blog => (
-              <tr key={blog._id} className="border-t hover:bg-gray-50 transition duration-200">
-                <td className="p-4 font-semibold">{blog.title}</td>
-                <td className="p-4 max-w-md truncate">{blog.description}</td>
-                <td className="p-4">
-                  {blog.imageUrl ? (
-                    <img src={blog.imageUrl} alt="Blog" className="h-14 w-auto rounded-xl shadow-sm" />
-                  ) : '—'}
-                </td>
-                <td className="p-4 flex justify-center items-center gap-3">
-                  <button
-                    className="px-4 py-1 bg-yellow-500 text-white rounded-full shadow hover:bg-yellow-600 transition"
-                    onClick={() => handleEdit(blog)}
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button
-                    className="px-4 py-1 bg-red-600 text-white rounded-full shadow hover:bg-red-700 transition"
-                    onClick={() => handleDelete(blog._id)}
-                  >
-                    🗑️ Delete
-                  </button>
-                </td>
-              </tr>
-            )) : (
-              <tr><td colSpan="4" className="text-center p-6 text-gray-500">No blogs found.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          )) : (
+            <tr><td colSpan="4" className="text-center p-4">No blogs found.</td></tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
