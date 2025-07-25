@@ -2,14 +2,14 @@ import Blog from '../models/Blog.js';
 
 // Create a new blog post
 export const createBlog = async (req, res) => {
-  const { title, description, imageUrl } = req.body;
+  const { title, description, imageUrl,author } = req.body;
 
   if (!title || !description) {
     return res.status(400).json({ success: false, message: 'Title and Description are required' });
   }
 
   try {
-    const blog = await Blog.create({ title, description, imageUrl });
+    const blog = await Blog.create({ title, description, imageUrl ,author});
     res.status(201).json({ success: true, data: blog });
   } catch (error) {
     console.error(error);
