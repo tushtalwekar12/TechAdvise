@@ -4,6 +4,9 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import hpp from 'hpp'
 import connectDB from './config/db.js';
 import logger from './utils/logger.js';
@@ -31,6 +34,10 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+
+// 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Security middleware
 app.use(helmet());
@@ -71,6 +78,15 @@ app.get('/', (req, res) => {
       environment: process.env.NODE_ENV
     });
   });
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+// Handle all other routes (React Router fallback)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
+
 
 // Rate limiting
 const contactLimiter = rateLimit({
