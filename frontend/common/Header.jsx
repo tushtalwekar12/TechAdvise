@@ -15,7 +15,7 @@ const Header = ({ openQuoteModal }) => {
           </svg>
         </div>
         <h2 className="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em]">
-          TeachAdvise
+          TechAdvise
         </h2>
       </div>
       <div className="flex flex-1 justify-end gap-4 md:gap-8">
