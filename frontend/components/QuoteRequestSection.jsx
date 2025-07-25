@@ -1,104 +1,172 @@
+// frontend/src/components/QuoteRequestSection.jsx
 import React, { useState } from "react";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaFileUpload,
+  FaClipboardList,
+} from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { submitQuote } from "../features/quote/quotesice";
 
-const initialForm = { name: '', email: '', phone: '', service: '', message: '' };
 
-const QuoteRequestSection = () => {
-  const [form, setForm] = useState(initialForm);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+const initialForm = {
+  name: "",
+  email: "",
+  phone: "",
+  service: "",
+  description: "",
+  budget: "",
+  timeline: "",
+  file: null,
+};
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+const serviceOptions = ["Website", "App", "SEO", "Design", "Other"];
+
+const QuoteRequestSection = ({ onSubmitSuccess, onFormInteraction }) => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState(initialForm);
+
+  const handleChange = (e) => {
+    onFormInteraction(); // stop the timer
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async e => {
+  const handleFileChange = (e) => {
+    onFormInteraction();
+    setFormData((prev) => ({ ...prev, file: e.target.files[0] }));
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setSuccess("");
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("/api/quotes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setSuccess("Quote request sent successfully!");
-        setForm(initialForm);
-      } else {
-        setError(data.message || "Failed to send quote request.");
-      }
-    } catch (err) {
-      setError("Failed to send quote request. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    dispatch(submitQuote(formData)); // dispatch Redux action
+    onSubmitSuccess();
+    setFormData(initialForm);
   };
 
   return (
-    <section className="px-4 md:px-10 lg:px-20 py-10 bg-white">
-      <h2 className="text-[#111518] text-2xl font-bold mb-4">Get a Quote</h2>
-      <form onSubmit={handleSubmit} className="max-w-xl mx-auto flex flex-col gap-4 bg-gray-50 p-6 rounded-xl border">
-        <input
-          className="p-2 border rounded"
-          name="name"
-          placeholder="Your Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
-        <input
-          className="p-2 border rounded"
-          name="email"
-          type="email"
-          placeholder="Your Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
-        <input
-          className="p-2 border rounded"
-          name="phone"
-          placeholder="Your Phone"
-          value={form.phone}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
-        <input
-          className="p-2 border rounded"
-          name="service"
-          placeholder="Service Type"
-          value={form.service}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
-        <textarea
-          className="p-2 border rounded"
-          name="message"
-          placeholder="Your Message"
-          value={form.message}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
+    <div className="w-full">
+      <h2 className="text-3xl font-bold text-center mb-6 text-blue-700">
+        Request a Free Quote
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
+        <div className="flex items-center border rounded p-2">
+          <FaUser className="mr-2 text-gray-500" />
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded p-2">
+          <FaEnvelope className="mr-2 text-gray-500" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded p-2">
+          <FaPhone className="mr-2 text-gray-500" />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Your Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="border rounded p-2">
+          <select
+            name="service"
+            value={formData.service}
+            onChange={handleChange}
+            required
+            className="w-full outline-none"
+          >
+            <option value="">Select a Service</option>
+            {serviceOptions.map((service, idx) => (
+              <option key={idx} value={service}>
+                {service}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="col-span-1 md:col-span-2 border rounded p-2">
+          <textarea
+            name="description"
+            placeholder="Describe your project"
+            rows="3"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            className="w-full outline-none resize-none"
+          ></textarea>
+        </div>
+
+        <div className="flex items-center border rounded p-2">
+          <FaClipboardList className="mr-2 text-gray-500" />
+          <input
+            type="text"
+            name="budget"
+            placeholder="Estimated Budget"
+            value={formData.budget}
+            onChange={handleChange}
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded p-2">
+          <FaClipboardList className="mr-2 text-gray-500" />
+          <input
+            type="text"
+            name="timeline"
+            placeholder="Project Timeline"
+            value={formData.timeline}
+            onChange={handleChange}
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded p-2 col-span-1 md:col-span-2">
+          <FaFileUpload className="mr-2 text-gray-500" />
+          <input
+            type="file"
+            name="file"
+            accept=".pdf,.doc,.docx,.png,.jpg"
+            onChange={handleFileChange}
+            className="w-full"
+          />
+        </div>
+
         <button
           type="submit"
-          className="bg-[#0b80ee] text-white font-bold px-6 py-2 rounded hover:bg-blue-600 transition-colors"
-          disabled={loading}
+          className="col-span-1 md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4"
         >
-          {loading ? "Sending..." : "Request Quote"}
+          Submit Request
         </button>
-        {success && <p className="text-green-600 text-center">{success}</p>}
-        {error && <p className="text-red-600 text-center">{error}</p>}
       </form>
-    </section>
+    </div>
   );
 };
 
-export default QuoteRequestSection; 
+export default QuoteRequestSection;
