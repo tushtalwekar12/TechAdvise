@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { adminLogout } from '../../features/admin/adminAuthSlice';
 import {
@@ -16,10 +16,39 @@ import {
   Quote,
   Mail
 } from 'lucide-react';
+import axios from 'axios';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const [blogCount, setBlogCount] = useState(0);
+  const [internshipCount, setInternshipCount] = useState(0);
+
+  const fetchCounts = async () => {
+    try {
+      const blogsRes = await axios.get('/api/blog/');
+      let blogs = Array.isArray(blogsRes.data)
+        ? blogsRes.data
+        : blogsRes.data.blogs || blogsRes.data.data || [];
+      setBlogCount(blogs.length);
+
+      const internshipsRes = await axios.get('/api/internships/');
+      let internships = Array.isArray(internshipsRes.data)
+        ? internshipsRes.data
+        : internshipsRes.data.internships || internshipsRes.data.data || [];
+      setInternshipCount(internships.length);
+    } catch (error) {
+      setBlogCount(0);
+      setInternshipCount(0);
+    }
+  };
+
+  useEffect(() => {
+    if (location.pathname === '/admin/dashboard') {
+      fetchCounts();
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     dispatch(adminLogout());
@@ -117,6 +146,18 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-4 sm:p-6 md:p-10 w-full max-w-full overflow-x-hidden">
+        {location.pathname === '/admin/dashboard' && (
+          <div className="flex gap-6 mb-8">
+            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+              <div className="text-3xl font-bold text-blue-700">{blogCount}</div>
+              <div className="text-gray-600 mt-2">Blogs</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+              <div className="text-3xl font-bold text-blue-700">{internshipCount}</div>
+              <div className="text-gray-600 mt-2">Internships</div>
+            </div>
+          </div>
+        )}
         <Outlet />
       </main>
     </div>
