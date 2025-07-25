@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBlogById, clearSelectedBlog } from '../features/blogs/blogSlice';
+import ReactMarkdown from 'react-markdown'; // ✅ for Markdown rendering
 
 const BlogDetailsPage = () => {
   const { id } = useParams();
@@ -41,9 +42,20 @@ const BlogDetailsPage = () => {
           }}
         />
       )}
-      <p className="text-base text-[#111518] leading-7 whitespace-pre-line">
+
+      {/* ✅ Markdown rendering using components */}
+      <ReactMarkdown
+        components={{
+          p: ({ node, ...props }) => <p className="text-base text-[#111518] leading-7 mb-4" {...props} />,
+          h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mb-4" {...props} />,
+          h2: ({ node, ...props }) => <h2 className="text-2xl font-semibold mb-3" {...props} />,
+          li: ({ node, ...props }) => <li className="list-disc list-inside ml-6 mb-1" {...props} />,
+          strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
+          em: ({ node, ...props }) => <em className="italic" {...props} />,
+        }}
+      >
         {blog.description}
-      </p>
+      </ReactMarkdown>
     </div>
   );
 };

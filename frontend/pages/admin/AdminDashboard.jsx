@@ -19,7 +19,6 @@ import {
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(adminLogout());
@@ -34,11 +33,13 @@ const AdminDashboard = () => {
     { name: 'Resources', path: '/admin/dashboard/resources', icon: BookOpen },
     { name: 'Highlights', path: '/admin/dashboard/highlights', icon: Star },
     { name: 'Home Hero', path: '/admin/dashboard/hero', icon: Home },
+    { name: 'Internships', path: '/admin/dashboard/internships', icon: FileText },
     { name: 'Contact Info', path: '/admin/dashboard/contact', icon: Phone },
-    { name: 'Footer', path: '/admin/dashboard/footer', icon: FileText },
-    { name: 'FAQ', path: '/admin/dashboard/faq', icon: HelpCircle },
     { name: 'Quotes', path: '/admin/dashboard/quotes', icon: Quote },
-    { name: 'Contact Submissions', path: '/admin/dashboard/contact-forms', icon: Mail }
+    { name: 'Blog Posts', path: '/admin/dashboard/blogs', icon: FileText },
+    { name: 'Contact Submissions', path: '/admin/dashboard/contact-forms', icon: Mail },
+    { name: 'Footer', path: '/admin/dashboard/footer', icon: FileText },
+    { name: 'FAQ', path: '/admin/dashboard/faq', icon: HelpCircle }
   ];
 
   return (
@@ -47,23 +48,27 @@ const AdminDashboard = () => {
       <aside className="w-64 bg-white shadow-lg hidden md:flex flex-col justify-between sticky top-0 h-screen">
         <div className="p-6">
           <h2 className="text-2xl font-bold text-blue-700 mb-6">Admin Panel</h2>
-          <nav className="flex flex-col gap-3 text-gray-700">
+          <nav className="flex flex-col gap-1 text-gray-700">
             {links.map(({ name, path, icon: Icon }) => (
               <NavLink
                 key={name}
                 to={path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2 rounded-md transition ${
-                    isActive ? 'bg-blue-100 text-blue-700 font-semibold' : 'hover:bg-gray-100'
+                  `flex items-center px-4 py-2 rounded-md transition-all duration-150 ${
+                    isActive
+                      ? 'bg-blue-100 text-blue-700 font-semibold'
+                      : 'hover:bg-gray-100'
                   }`
                 }
               >
-                <Icon className="w-5 h-5" />
-                {name}
+                <Icon className="w-5 h-5 mr-3" />
+                <span className="text-sm">{name}</span>
               </NavLink>
             ))}
           </nav>
         </div>
+
+        {/* Logout Button */}
         <div className="p-6">
           <button
             onClick={handleLogout}
@@ -77,9 +82,6 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6 md:p-10">
-        {/* Sticky Header */}
-        
-
         <Outlet />
       </main>
     </div>

@@ -83,30 +83,30 @@ const AdminContactInfoPage = () => {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Manage Contact Info</h2>
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-xl">
+      <h2 className="text-2xl font-bold mb-6 text-center">📞 Manage Contact Info</h2>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center text-gray-600">Loading...</p>
       ) : reduxError ? (
-        <p className="text-red-600">{reduxError.message || reduxError}</p>
+        <p className="text-red-600 text-center">{reduxError.message || reduxError}</p>
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-50 p-4 rounded border">
-              <h3 className="text-lg font-semibold mb-2">Current Contact Info</h3>
-              <p><b>Email:</b> {info?.email}</p>
-              <p><b>Phone:</b> {info?.phone}</p>
-              <p><b>Address:</b> {info?.address}</p>
-              <p><b>Map Embed URL:</b> {info?.mapEmbedUrl}</p>
-              {info?.image && <img src={info.image} alt="Contact" className="h-24 my-2 rounded" />}
-              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded" onClick={() => setEditing(true)}>
-                Edit Contact Info
+            <div className="mb-6 bg-gray-100 p-6 rounded-lg border border-gray-300">
+              <h3 className="text-xl font-semibold mb-4">📋 Current Contact Info</h3>
+              <p className="mb-2"><strong>Email:</strong> {info?.email}</p>
+              <p className="mb-2"><strong>Phone:</strong> {info?.phone}</p>
+              <p className="mb-2"><strong>Address:</strong> {info?.address}</p>
+              <p className="mb-2"><strong>Map Embed URL:</strong> {info?.mapEmbedUrl}</p>
+              {info?.image && <img src={info.image} alt="Contact" className="h-32 my-4 rounded-lg shadow" />}
+              <button className="mt-4 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition" onClick={() => setEditing(true)}>
+                ✏️ Edit Contact Info
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mb-4 p-4 border rounded bg-gray-50">
+            <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100 p-6 border rounded-lg shadow">
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 name="email"
                 placeholder="Email"
                 value={form.email}
@@ -114,7 +114,7 @@ const AdminContactInfoPage = () => {
                 required
               />
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 name="phone"
                 placeholder="Phone"
                 value={form.phone}
@@ -122,14 +122,14 @@ const AdminContactInfoPage = () => {
                 required
               />
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 name="address"
                 placeholder="Address (optional)"
                 value={form.address}
                 onChange={handleChange}
               />
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 name="mapEmbedUrl"
                 placeholder="Map Embed URL (optional)"
                 value={form.mapEmbedUrl}
@@ -138,22 +138,22 @@ const AdminContactInfoPage = () => {
               <input
                 type="file"
                 accept="image/*"
-                className="block mb-2"
+                className="block p-2 border rounded bg-white"
                 onChange={handleImageChange}
                 disabled={uploading}
               />
               {uploading && <p className="text-blue-600">Uploading image...</p>}
               {uploadError && <p className="text-red-600">{uploadError}</p>}
               {(imagePreview || form.image) && (
-                <img src={imagePreview || form.image} alt="Preview" className="h-24 mb-2" />
+                <img src={imagePreview || form.image} alt="Preview" className="h-32 rounded-lg shadow" />
               )}
               {formError && <p className="text-red-600">{formError}</p>}
-              <div className="flex gap-2">
-                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled={uploading}>
-                  Save
+              <div className="flex gap-4 pt-2">
+                <button type="submit" className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition" disabled={uploading}>
+                  💾 Save
                 </button>
-                <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={() => { setEditing(false); setFormError(''); setUploadError(''); }}>
-                  Cancel
+                <button type="button" className="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg transition" onClick={() => { setEditing(false); setFormError(''); setUploadError(''); }}>
+                  ❌ Cancel
                 </button>
               </div>
             </form>
@@ -164,4 +164,4 @@ const AdminContactInfoPage = () => {
   );
 };
 
-export default AdminContactInfoPage; 
+export default AdminContactInfoPage;

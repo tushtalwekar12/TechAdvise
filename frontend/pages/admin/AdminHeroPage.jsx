@@ -87,30 +87,32 @@ const AdminHeroPage = () => {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Manage HomePage Hero</h2>
+    <div className="p-6 max-w-3xl mx-auto bg-white rounded-xl shadow-lg space-y-4">
+      <h2 className="text-2xl font-bold text-gray-800">Manage HomePage Hero</h2>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       ) : reduxError ? (
         <p className="text-red-600">{reduxError.message || reduxError}</p>
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-50 p-4 rounded border">
-              <h3 className="text-lg font-semibold mb-2">Current Hero Section</h3>
-              <p><b>Title:</b> {hero?.title}</p>
-              <p><b>Subtitle:</b> {hero?.subtitle}</p>
-              <p><b>CTA Text:</b> {hero?.ctaText}</p>
-              <p><b>CTA Link:</b> {hero?.ctaLink}</p>
-              {hero?.image && <img src={hero.image} alt="Hero" className="h-32 my-2 rounded" />}
-              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded" onClick={() => setEditing(true)}>
+            <div className="space-y-2 border p-4 rounded-lg bg-gray-50">
+              <h3 className="text-xl font-semibold">Current Hero Section</h3>
+              <div className="text-gray-700">
+                <p><b>Title:</b> {hero?.title}</p>
+                <p><b>Subtitle:</b> {hero?.subtitle}</p>
+                <p><b>CTA Text:</b> {hero?.ctaText}</p>
+                <p><b>CTA Link:</b> {hero?.ctaLink}</p>
+                {hero?.image && <img src={hero.image} alt="Hero" className="h-40 mt-2 rounded-lg shadow-md" />}
+              </div>
+              <button className="mt-4 px-4 py-2 bg-blue-200 text-blue-800 font-semibold rounded-md hover:bg-blue-300" onClick={() => setEditing(true)}>
                 Edit Hero Section
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mb-4 p-4 border rounded bg-gray-50">
+            <form onSubmit={handleSubmit} className="space-y-4 border p-4 rounded-lg bg-gray-50">
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-2 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 name="title"
                 placeholder="Title"
                 value={form.title}
@@ -118,7 +120,7 @@ const AdminHeroPage = () => {
                 required
               />
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-2 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 name="subtitle"
                 placeholder="Subtitle (optional)"
                 value={form.subtitle}
@@ -127,35 +129,35 @@ const AdminHeroPage = () => {
               <input
                 type="file"
                 accept="image/*"
-                className="block mb-2"
+                className="block"
                 onChange={handleImageChange}
                 disabled={uploading}
               />
               {uploading && <p className="text-blue-600">Uploading image...</p>}
               {uploadError && <p className="text-red-600">{uploadError}</p>}
               {(imagePreview || form.image) && (
-                <img src={imagePreview || form.image} alt="Preview" className="h-24 mb-2" />
+                <img src={imagePreview || form.image} alt="Preview" className="h-28 rounded-md" />
               )}
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-2 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 name="ctaText"
                 placeholder="CTA Button Text (optional)"
                 value={form.ctaText}
                 onChange={handleChange}
               />
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block p-2 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 name="ctaLink"
                 placeholder="CTA Button Link (optional)"
                 value={form.ctaLink}
                 onChange={handleChange}
               />
               {formError && <p className="text-red-600">{formError}</p>}
-              <div className="flex gap-2">
-                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled={uploading}>
+              <div className="flex gap-4">
+                <button type="submit" className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
                   Save
                 </button>
-                <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={() => { setEditing(false); setFormError(''); setUploadError(''); }}>
+                <button type="button" className="px-4 py-2 bg-blue-200 text-blue-800 rounded hover:bg-blue-300" onClick={() => { setEditing(false); setFormError(''); setUploadError(''); }}>
                   Cancel
                 </button>
               </div>
@@ -167,4 +169,4 @@ const AdminHeroPage = () => {
   );
 };
 
-export default AdminHeroPage; 
+export default AdminHeroPage;

@@ -1,3 +1,4 @@
+// ... [All your imports remain unchanged]
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBlogs, createBlog, updateBlog, deleteBlog } from '../../features/blogs/blogSlice';
@@ -61,7 +62,7 @@ const AdminBlogsPage = () => {
     setFormError('');
     setUploadError('');
     try {
-      if (uploading) return; // Prevent submit while uploading
+      if (uploading) return;
       if (!form.title.trim() || !form.description.trim()) {
         setFormError('Title and description are required.');
         return;
@@ -74,14 +75,12 @@ const AdminBlogsPage = () => {
         const result = await dispatch(updateBlog({ id: editingId, blogData: form }));
         if (result.error) {
           setFormError(result.error.message || 'Failed to update blog.');
-          console.error('Update error:', result.error);
           return;
         }
       } else {
         const result = await dispatch(createBlog(form));
         if (result.error) {
           setFormError(result.error.message || 'Failed to create blog.');
-          console.error('Create error:', result.error);
           return;
         }
       }
@@ -93,7 +92,6 @@ const AdminBlogsPage = () => {
       setFormError('');
     } catch (err) {
       setFormError('Unexpected error: ' + (err.message || err));
-      console.error('Unexpected error:', err);
     }
   };
 
@@ -112,84 +110,113 @@ const AdminBlogsPage = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Manage Blogs</h2>
+    <div className="max-w-6xl mx-auto p-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">📝 Manage Blogs</h2>
+
       <button
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="mb-6 px-5 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow transition-all duration-200"
         onClick={() => { setShowForm(true); setForm(initialForm); setEditingId(null); setImagePreview(''); setUploadError(''); }}
       >
-        Add New Blog
+        ➕ Add New Blog
       </button>
+
       {showForm && (
-        <form onSubmit={handleSubmit} className="mb-4 p-4 border rounded bg-gray-50">
+        <form onSubmit={handleSubmit} className="mb-8 p-6 rounded-2xl bg-white shadow-xl border border-gray-200 space-y-4">
           <input
-            className="block mb-2 p-2 w-full border rounded"
+            className="block p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="title"
-            placeholder="Title"
+            placeholder="Blog Title"
             value={form.title}
             onChange={handleChange}
             required
           />
           <textarea
-            className="block mb-2 p-2 w-full border rounded"
+            className="block p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="description"
-            placeholder="Description"
+            placeholder="Markdown Description (supports **bold**, _italic_, etc.)"
             value={form.description}
             onChange={handleChange}
             required
+            rows="6"
           />
           <input
             type="file"
             accept="image/*"
-            className="block mb-2"
+            className="block"
             onChange={handleImageChange}
             disabled={uploading}
           />
-          {uploading && <p className="text-blue-600">Uploading image...</p>}
-          {uploadError && <p className="text-red-600">{uploadError}</p>}
-          {formError && <p className="text-red-600">{formError}</p>}
+          {uploading && <p className="text-blue-600 font-medium">Uploading image...</p>}
+          {uploadError && <p className="text-red-600 font-medium">{uploadError}</p>}
+          {formError && <p className="text-red-600 font-medium">{formError}</p>}
           {(imagePreview || form.imageUrl) && (
-            <img src={imagePreview || form.imageUrl} alt="Preview" className="h-24 mb-2" />
+            <img src={imagePreview || form.imageUrl} alt="Preview" className="h-32 rounded-xl object-cover shadow-md" />
           )}
-          <div className="flex gap-2">
-            <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled={uploading}>
-              {editingId ? 'Update' : 'Create'}
+          <div className="flex gap-4 mt-2">
+            <button
+              type="submit"
+              className="px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-200"
+              disabled={uploading}
+            >
+              {editingId ? '✅ Update' : '🚀 Create'}
             </button>
-            <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={() => { setShowForm(false); setEditingId(null); setForm(initialForm); setImagePreview(''); setUploadError(''); }}>
-              Cancel
+            <button
+              type="button"
+              className="px-5 py-2 bg-gray-400 text-white rounded-xl hover:bg-gray-500 transition-all duration-200"
+              onClick={() => { setShowForm(false); setEditingId(null); setForm(initialForm); setImagePreview(''); setUploadError(''); }}
+            >
+              ❌ Cancel
             </button>
           </div>
         </form>
       )}
-      {loading && <p>Loading...</p>}
-      {reduxError && <p className="text-red-600">{reduxError.message || reduxError}</p>}
-      <table className="w-full border mt-4">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border">Title</th>
-            <th className="p-2 border">Description</th>
-            <th className="p-2 border">Image</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {blogs && blogs.length > 0 ? blogs.map(blog => (
-            <tr key={blog._id} className="border-b">
-              <td className="p-2 border">{blog.title}</td>
-              <td className="p-2 border">{blog.description}</td>
-              <td className="p-2 border">{blog.imageUrl ? <img src={blog.imageUrl} alt="" className="h-12" /> : '—'}</td>
-              <td className="p-2 border">
-                <button className="mr-2 px-2 py-1 bg-yellow-500 text-white rounded" onClick={() => handleEdit(blog)}>Edit</button>
-                <button className="px-2 py-1 bg-red-600 text-white rounded" onClick={() => handleDelete(blog._id)}>Delete</button>
-              </td>
+
+      {loading && <p className="text-gray-600 font-medium">Loading blogs...</p>}
+      {reduxError && <p className="text-red-600 font-medium">{reduxError.message || reduxError}</p>}
+
+      <div className="overflow-x-auto bg-white rounded-2xl shadow-xl border border-gray-200">
+        <table className="min-w-full text-left text-sm">
+          <thead className="bg-gray-100 text-gray-700 uppercase text-xs tracking-wider">
+            <tr>
+              <th className="p-4">Title</th>
+              <th className="p-4">Description</th>
+              <th className="p-4">Image</th>
+              <th className="p-4 text-center">Actions</th>
             </tr>
-          )) : (
-            <tr><td colSpan="4" className="text-center p-4">No blogs found.</td></tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="text-gray-800">
+            {blogs && blogs.length > 0 ? blogs.map(blog => (
+              <tr key={blog._id} className="border-t hover:bg-gray-50 transition duration-200">
+                <td className="p-4 font-semibold">{blog.title}</td>
+                <td className="p-4 max-w-md truncate">{blog.description}</td>
+                <td className="p-4">
+                  {blog.imageUrl ? (
+                    <img src={blog.imageUrl} alt="Blog" className="h-14 w-auto rounded-xl shadow-sm" />
+                  ) : '—'}
+                </td>
+                <td className="p-4 flex justify-center items-center gap-3">
+                  <button
+                    className="px-4 py-1 bg-yellow-500 text-white rounded-full shadow hover:bg-yellow-600 transition"
+                    onClick={() => handleEdit(blog)}
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    className="px-4 py-1 bg-red-600 text-white rounded-full shadow hover:bg-red-700 transition"
+                    onClick={() => handleDelete(blog._id)}
+                  >
+                    🗑️ Delete
+                  </button>
+                </td>
+              </tr>
+            )) : (
+              <tr><td colSpan="4" className="text-center p-6 text-gray-500">No blogs found.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default AdminBlogsPage; 
+export default AdminBlogsPage;

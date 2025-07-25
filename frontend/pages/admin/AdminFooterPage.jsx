@@ -63,8 +63,8 @@ const AdminFooterPage = () => {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Manage Footer</h2>
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-2xl">
+      <h2 className="text-2xl font-bold mb-6 border-b pb-2">Manage Footer</h2>
       {loading ? (
         <p>Loading...</p>
       ) : reduxError ? (
@@ -72,40 +72,40 @@ const AdminFooterPage = () => {
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-50 p-4 rounded border">
-              <h3 className="text-lg font-semibold mb-2">Current Footer</h3>
-              <p><b>Copyright:</b> {footer?.copyright}</p>
-              <div className="mb-2">
+            <div className="mb-6 bg-gray-100 p-6 rounded-xl border">
+              <h3 className="text-lg font-semibold mb-3">Current Footer</h3>
+              <p className="mb-2"><b>Copyright:</b> {footer?.copyright}</p>
+              <div className="mb-3">
                 <b>Links:</b>
-                <ul className="list-disc ml-6">
+                <ul className="list-disc ml-6 mt-1">
                   {footer?.links?.map((l, i) => (
                     <li key={i}>{l.label}: <a href={l.url} className="text-blue-600 underline">{l.url}</a></li>
                   ))}
                 </ul>
               </div>
-              <div className="mb-2">
+              <div className="mb-3">
                 <b>Social:</b>
-                <ul className="list-disc ml-6">
+                <ul className="list-disc ml-6 mt-1">
                   {footer?.social?.map((s, i) => (
                     <li key={i}>{s.platform}: <a href={s.url} className="text-blue-600 underline">{s.url}</a></li>
                   ))}
                 </ul>
               </div>
-              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded" onClick={() => setEditing(true)}>
+              <button className="mt-4 px-5 py-2 bg-blue-400 text-white rounded hover:bg-blue-500" onClick={() => setEditing(true)}>
                 Edit Footer
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mb-4 p-4 border rounded bg-gray-50">
+            <form onSubmit={handleSubmit} className="mb-4 p-6 border rounded-xl bg-gray-50">
               <input
-                className="block mb-2 p-2 w-full border rounded"
+                className="block mb-4 p-3 w-full border rounded-md"
                 name="copyright"
                 placeholder="Copyright"
                 value={form.copyright}
                 onChange={handleChange}
                 required
               />
-              <div className="mb-4">
+              <div className="mb-6">
                 <b>Links:</b>
                 {form.links.map((link, idx) => (
                   <div key={idx} className="flex gap-2 mb-2">
@@ -123,12 +123,12 @@ const AdminFooterPage = () => {
                       value={link.url}
                       onChange={e => handleLinkChange(idx, e)}
                     />
-                    <button type="button" className="px-2 py-1 bg-red-500 text-white rounded" onClick={() => removeLink(idx)} disabled={form.links.length === 1}>Remove</button>
+                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" onClick={() => removeLink(idx)} disabled={form.links.length === 1}>Remove</button>
                   </div>
                 ))}
-                <button type="button" className="px-2 py-1 bg-green-500 text-white rounded" onClick={addLink}>Add Link</button>
+                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={addLink}>Add Link</button>
               </div>
-              <div className="mb-4">
+              <div className="mb-6">
                 <b>Social:</b>
                 {form.social.map((social, idx) => (
                   <div key={idx} className="flex gap-2 mb-2">
@@ -146,17 +146,17 @@ const AdminFooterPage = () => {
                       value={social.url}
                       onChange={e => handleSocialChange(idx, e)}
                     />
-                    <button type="button" className="px-2 py-1 bg-red-500 text-white rounded" onClick={() => removeSocial(idx)} disabled={form.social.length === 1}>Remove</button>
+                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" onClick={() => removeSocial(idx)} disabled={form.social.length === 1}>Remove</button>
                   </div>
                 ))}
-                <button type="button" className="px-2 py-1 bg-green-500 text-white rounded" onClick={addSocial}>Add Social</button>
+                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={addSocial}>Add Social</button>
               </div>
-              {formError && <p className="text-red-600">{formError}</p>}
-              <div className="flex gap-2">
-                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+              {formError && <p className="text-red-600 mb-4">{formError}</p>}
+              <div className="flex gap-3">
+                <button type="submit" className="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700">
                   Save
                 </button>
-                <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={() => { setEditing(false); setFormError(''); }}>
+                <button type="button" className="px-5 py-2 bg-gray-400 text-white rounded hover:bg-gray-500" onClick={() => { setEditing(false); setFormError(''); }}>
                   Cancel
                 </button>
               </div>
@@ -168,4 +168,4 @@ const AdminFooterPage = () => {
   );
 };
 
-export default AdminFooterPage; 
+export default AdminFooterPage;

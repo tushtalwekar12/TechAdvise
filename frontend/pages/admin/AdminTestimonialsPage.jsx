@@ -212,8 +212,20 @@ const AdminTestimonialsPage = () => {
               <td className="p-2 border">{testimonial.text}</td>
               <td className="p-2 border">{testimonial.rating}</td>
               <td className="p-2 border">
-                <button className="mr-2 px-2 py-1 bg-yellow-500 text-white rounded" onClick={() => handleEdit(testimonial)}>Edit</button>
-                <button className="px-2 py-1 bg-red-600 text-white rounded" onClick={() => handleDelete(testimonial._id)}>Delete</button>
+                <div className="flex space-x-3">
+                  <button
+                    className="px-3 py-1 bg-blue-300 text-white rounded hover:bg-blue-400 transition"
+                    onClick={() => handleEdit(testimonial)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500 transition"
+                    onClick={() => handleDelete(testimonial._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           )) : (
@@ -225,4 +237,4 @@ const AdminTestimonialsPage = () => {
   );
 };
 
-export default AdminTestimonialsPage; 
+export default AdminTestimonialsPage;
