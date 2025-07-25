@@ -516,7 +516,7 @@ const InternshipPage = () => {
         </div>
 
         {/* FAQ Section */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
             <p className="text-lg text-gray-600">Everything you need to know about our internship program</p>
@@ -554,7 +554,7 @@ const InternshipPage = () => {
             )) : !faqLoading && !faqError ? (
               <div>No FAQs found.</div>
             ) : null}
-          </div>
+          </div> */}
 
           {/* Contact Section */}
           {/* <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
@@ -571,7 +571,7 @@ const InternshipPage = () => {
               </button>
             </div>
           </div> */}
-        </div>
+        {/* </div> */}
       </div>
     </>
   );

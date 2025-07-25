@@ -23,7 +23,7 @@ const Header = ({ openQuoteModal }) => {
         <div className="hidden md:flex items-center gap-6 md:gap-9">
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/">Home</Link>
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/services">Services</Link>
-          <Link className="text-[#111418] text-sm font-medium leading-normal" to="/resources">Resources</Link>
+          {/* <Link className="text-[#111418] text-sm font-medium leading-normal" to="/resources">Resources</Link> */}
           <Link className="text-[#111418] text-sm font-medium leading-normal" to="/internships">Career</Link>
         </div>
         {/* Hamburger Icon for Mobile */}
