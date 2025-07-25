@@ -22,10 +22,10 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 via-white to-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 via-white to-gray-100 px-2 sm:px-4 overflow-x-hidden w-full">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 md:p-10 rounded-2xl shadow-xl w-full max-w-md transition-all duration-300"
+        className="bg-white p-4 sm:p-8 md:p-10 rounded-2xl shadow-xl w-full max-w-md transition-all duration-300"
       >
         <h2 className="text-3xl font-extrabold mb-6 text-center text-gray-800">Admin Login</h2>
         

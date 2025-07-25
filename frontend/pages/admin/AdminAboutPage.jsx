@@ -95,7 +95,7 @@ const AdminAboutPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-xl">
+    <div className="p-4 sm:p-6 w-full max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-x-hidden">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Manage About & Team</h2>
       {loading ? (
         <p>Loading...</p>
@@ -104,7 +104,7 @@ const AdminAboutPage = () => {
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-100 p-6 rounded-xl border border-gray-200">
+            <div className="mb-6 bg-gray-100 p-4 sm:p-6 rounded-xl border border-gray-200">
               <h3 className="text-lg font-semibold mb-3 text-gray-700">Current About Page</h3>
               <p className="mb-2"><b>Mission:</b> {content?.mission}</p>
               <p className="mb-2"><b>Values:</b> {content?.values}</p>
@@ -130,7 +130,7 @@ const AdminAboutPage = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mb-4 p-6 border rounded-xl bg-gray-50 shadow">
+            <form onSubmit={handleSubmit} className="mb-4 p-4 sm:p-6 border rounded-xl bg-gray-50 shadow">
               <textarea
                 className="block mb-4 p-3 w-full border rounded-lg focus:outline-blue-300"
                 name="mission"
@@ -149,7 +149,7 @@ const AdminAboutPage = () => {
               />
               <h3 className="font-semibold text-gray-700 mt-6 mb-3">Team Members</h3>
               {form.team.map((member, idx) => (
-                <div key={idx} className="flex flex-wrap gap-3 mb-4 items-center">
+                <div key={idx} className="flex flex-col sm:flex-row gap-3 mb-4 items-stretch sm:items-center">
                   <input
                     className="p-2 border rounded w-full sm:w-1/4"
                     name="name"
@@ -167,15 +167,21 @@ const AdminAboutPage = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    className="block"
+                    className="block w-full sm:w-auto"
                     onChange={e => handleImageChange(idx, e)}
                     disabled={uploadingIdx === idx}
                   />
                   {uploadingIdx === idx && <span className="text-blue-600">Uploading...</span>}
-                  {member.image && <img src={member.image} alt="Preview" className="h-10 w-10 rounded-full border border-gray-300" />}
+                  {member.image && (
+                    <img
+                      src={member.image}
+                      alt="Preview"
+                      className="h-10 w-10 max-w-full rounded-full border border-gray-300"
+                    />
+                  )}
                   <button
                     type="button"
-                    className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500"
+                    className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500 w-full sm:w-auto"
                     onClick={() => removeTeamMember(idx)}
                     disabled={form.team.length === 1}
                   >
@@ -185,7 +191,7 @@ const AdminAboutPage = () => {
               ))}
               <button
                 type="button"
-                className="px-4 py-2 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 mb-6"
+                className="px-4 py-2 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 mb-6 w-full sm:w-auto"
                 onClick={addTeamMember}
               >
                 Add Team Member
@@ -212,17 +218,17 @@ const AdminAboutPage = () => {
               {formError && <p className="text-red-600 mb-2">{formError}</p>}
               {uploadError && <p className="text-red-600 mb-2">{uploadError}</p>}
 
-              <div className="flex gap-4 mt-4">
+              <div className="flex flex-col sm:flex-row gap-4 mt-4">
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 transition"
+                  className="px-5 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 transition w-full sm:w-auto"
                   disabled={!!uploadingIdx}
                 >
                   Save
                 </button>
                 <button
                   type="button"
-                  className="px-5 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                  className="px-5 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 w-full sm:w-auto"
                   onClick={() => {
                     setEditing(false);
                     setFormError('');

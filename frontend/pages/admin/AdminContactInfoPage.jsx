@@ -83,7 +83,7 @@ const AdminContactInfoPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-xl">
+    <div className="p-4 sm:p-6 w-full max-w-3xl mx-auto bg-white shadow-md rounded-xl overflow-x-hidden">
       <h2 className="text-2xl font-bold mb-6 text-center">📞 Manage Contact Info</h2>
       {loading ? (
         <p className="text-center text-gray-600">Loading...</p>
@@ -92,7 +92,7 @@ const AdminContactInfoPage = () => {
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-100 p-6 rounded-lg border border-gray-300">
+            <div className="mb-6 bg-gray-100 p-4 sm:p-6 rounded-lg border border-gray-300">
               <h3 className="text-xl font-semibold mb-4">📋 Current Contact Info</h3>
               <p className="mb-2"><strong>Email:</strong> {info?.email}</p>
               <p className="mb-2"><strong>Phone:</strong> {info?.phone}</p>
@@ -104,7 +104,7 @@ const AdminContactInfoPage = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100 p-6 border rounded-lg shadow">
+            <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100 p-4 sm:p-6 border rounded-lg shadow">
               <input
                 className="block p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 name="email"
@@ -148,7 +148,7 @@ const AdminContactInfoPage = () => {
                 <img src={imagePreview || form.image} alt="Preview" className="h-32 rounded-lg shadow" />
               )}
               {formError && <p className="text-red-600">{formError}</p>}
-              <div className="flex gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <button type="submit" className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition" disabled={uploading}>
                   💾 Save
                 </button>

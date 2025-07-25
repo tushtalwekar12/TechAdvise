@@ -62,7 +62,7 @@ const AdminFAQPage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 overflow-x-hidden">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">📘 Manage FAQs</h2>
 
       <button
@@ -78,7 +78,7 @@ const AdminFAQPage = () => {
       </button>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="mb-8 bg-white p-6 rounded-2xl shadow-md space-y-4">
+        <form onSubmit={handleSubmit} className="mb-8 bg-white p-4 sm:p-6 rounded-2xl shadow-md space-y-4">
           <input
             name="question"
             placeholder="Enter question"
@@ -96,7 +96,7 @@ const AdminFAQPage = () => {
             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
           {formError && <p className="text-red-600">{formError}</p>}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
               className="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
@@ -122,8 +122,8 @@ const AdminFAQPage = () => {
       {loading && <p className="text-gray-500">Loading FAQs...</p>}
       {reduxError && <p className="text-red-600">{reduxError.message || reduxError}</p>}
 
-      <div className="overflow-x-auto">
-        <table className="w-full bg-white shadow-md rounded-xl overflow-hidden">
+      <div className="overflow-x-auto w-full">
+        <table className="min-w-full bg-white shadow-md rounded-xl overflow-hidden">
           <thead className="bg-gray-100">
             <tr>
               <th className="text-left px-4 py-3 text-gray-600 font-medium">Question</th>
@@ -137,7 +137,7 @@ const AdminFAQPage = () => {
                 <tr key={faq._id} className="border-t">
                   <td className="px-4 py-3 text-gray-800">{faq.question}</td>
                   <td className="px-4 py-3 text-gray-700">{faq.answer}</td>
-                  <td className="px-4 py-3 flex justify-center gap-2">
+                  <td className="px-4 py-3 flex flex-col sm:flex-row justify-center gap-2">
                     <button
                       onClick={() => handleEdit(faq)}
                       className="px-3 py-1 bg-blue-300 text-white rounded-md hover:bg-blue-400 transition"

@@ -63,7 +63,7 @@ const AdminFooterPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-2xl">
+    <div className="p-4 sm:p-6 w-full max-w-3xl mx-auto bg-white shadow-md rounded-2xl overflow-x-hidden">
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">Manage Footer</h2>
       {loading ? (
         <p>Loading...</p>
@@ -72,7 +72,7 @@ const AdminFooterPage = () => {
       ) : (
         <>
           {!editing ? (
-            <div className="mb-6 bg-gray-100 p-6 rounded-xl border">
+            <div className="mb-6 bg-gray-100 p-4 sm:p-6 rounded-xl border">
               <h3 className="text-lg font-semibold mb-3">Current Footer</h3>
               <p className="mb-2"><b>Copyright:</b> {footer?.copyright}</p>
               <div className="mb-3">
@@ -96,7 +96,7 @@ const AdminFooterPage = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mb-4 p-6 border rounded-xl bg-gray-50">
+            <form onSubmit={handleSubmit} className="mb-4 p-4 sm:p-6 border rounded-xl bg-gray-50">
               <input
                 className="block mb-4 p-3 w-full border rounded-md"
                 name="copyright"
@@ -108,51 +108,51 @@ const AdminFooterPage = () => {
               <div className="mb-6">
                 <b>Links:</b>
                 {form.links.map((link, idx) => (
-                  <div key={idx} className="flex gap-2 mb-2">
+                  <div key={idx} className="flex flex-col sm:flex-row gap-2 mb-2">
                     <input
-                      className="p-2 border rounded w-1/2"
+                      className="p-2 border rounded w-full sm:w-1/2"
                       name="label"
                       placeholder="Label"
                       value={link.label}
                       onChange={e => handleLinkChange(idx, e)}
                     />
                     <input
-                      className="p-2 border rounded w-1/2"
+                      className="p-2 border rounded w-full sm:w-1/2"
                       name="url"
                       placeholder="URL"
                       value={link.url}
                       onChange={e => handleLinkChange(idx, e)}
                     />
-                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" onClick={() => removeLink(idx)} disabled={form.links.length === 1}>Remove</button>
+                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 w-full sm:w-auto" onClick={() => removeLink(idx)} disabled={form.links.length === 1}>Remove</button>
                   </div>
                 ))}
-                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={addLink}>Add Link</button>
+                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full sm:w-auto" onClick={addLink}>Add Link</button>
               </div>
               <div className="mb-6">
                 <b>Social:</b>
                 {form.social.map((social, idx) => (
-                  <div key={idx} className="flex gap-2 mb-2">
+                  <div key={idx} className="flex flex-col sm:flex-row gap-2 mb-2">
                     <input
-                      className="p-2 border rounded w-1/2"
+                      className="p-2 border rounded w-full sm:w-1/2"
                       name="platform"
                       placeholder="Platform"
                       value={social.platform}
                       onChange={e => handleSocialChange(idx, e)}
                     />
                     <input
-                      className="p-2 border rounded w-1/2"
+                      className="p-2 border rounded w-full sm:w-1/2"
                       name="url"
                       placeholder="URL"
                       value={social.url}
                       onChange={e => handleSocialChange(idx, e)}
                     />
-                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" onClick={() => removeSocial(idx)} disabled={form.social.length === 1}>Remove</button>
+                    <button type="button" className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 w-full sm:w-auto" onClick={() => removeSocial(idx)} disabled={form.social.length === 1}>Remove</button>
                   </div>
                 ))}
-                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={addSocial}>Add Social</button>
+                <button type="button" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full sm:w-auto" onClick={addSocial}>Add Social</button>
               </div>
               {formError && <p className="text-red-600 mb-4">{formError}</p>}
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button type="submit" className="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700">
                   Save
                 </button>
