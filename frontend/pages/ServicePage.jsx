@@ -3,7 +3,7 @@ import { Trophy, Users, Headset, TrendUp } from "phosphor-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServicePageContent } from '../features/servicePage/servicePageSlice';
 import { fetchFAQs } from '../features/faq/faqSlice';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet";  
 
 const ICON_MAP = {
   'briefcase': <i className="ph ph-briefcase"></i>,
@@ -45,15 +45,25 @@ const ServicePage = () => {
   return (
     <>
       <Helmet>
-        <title>{hero?.title || "Services | TechAdvise"}</title>
-        <meta name="description" content={hero?.subtitle || "Explore our services at TechAdvise."} />
-        <meta property="og:title" content={hero?.title || "Services | TechAdvise"} />
-        <meta property="og:description" content={hero?.subtitle || "Explore our services at TechAdvise."} />
-        {hero?.image && <meta property="og:image" content={hero.image} />} 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={hero?.title || "Services | TechAdvise"} />
-        <meta name="twitter:description" content={hero?.subtitle || "Explore our services at TechAdvise."} />
-        {hero?.image && <meta name="twitter:image" content={hero.image} />}
+        <title>Custom Web Development Services in India | TechAdvise</title>
+        <meta
+          name="description"
+          content="TechAdvise provides affordable custom web development services in India. Get responsive, scalable websites tailored to your business."
+        />
+        <meta
+          name="keywords"
+          content="custom web development, full stack web development India, responsive website development"
+        />
+        <meta property="og:title" content="Custom Web Development Services in India | TechAdvise" />
+        <meta
+          property="og:description"
+          content="TechAdvise provides affordable custom web development services in India. Get responsive, scalable websites tailored to your business."
+        />
+        <meta name="twitter:title" content="Custom Web Development Services in India | TechAdvise" />
+        <meta
+          name="twitter:description"
+          content="TechAdvise provides affordable custom web development services in India. Get responsive, scalable websites tailored to your business."
+        />
       </Helmet>
       <div className="min-h-screen bg-gray-50">
         <div className="px-4 md:px-20 lg:px-40 py-10 flex justify-center">
