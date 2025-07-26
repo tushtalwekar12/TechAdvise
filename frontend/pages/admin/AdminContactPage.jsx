@@ -1,103 +1,136 @@
 import React, { useEffect, useState } from 'react';
+import api from '../../utils/api'; // axios instance
 
 const AdminContactPage = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [statusUpdating, setStatusUpdating] = useState("");
+  const [error, setError] = useState('');
+  const [statusUpdating, setStatusUpdating] = useState(null);
+  const [pagination, setPagination] = useState({ page: 1, pages: 1, limit: 10 });
 
-  const fetchContacts = async () => {
+  const fetchContacts = async (page = 1) => {
     setLoading(true);
-    setError("");
+    setError('');
     try {
-      const res = await fetch('/api/contact', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
-      });
-      const data = await res.json();
-      if (data.success) {
-        setContacts(data.data);
+      const res = await api.get(`/api/contact?page=${page}&limit=${pagination.limit}`);
+      if (res.data.success) {
+        setContacts(res.data.data);
+        setPagination(res.data.pagination);
       } else {
-        setError(data.message || "Failed to load contacts.");
+        setError(res.data.message || 'Failed to fetch contacts');
       }
     } catch (err) {
-      setError("Failed to load contacts.");
+      setError(err.response?.data?.message || 'Error fetching contacts');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchContacts();
+    fetchContacts(pagination.page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleStatusChange = async (id, status) => {
+  const handleStatusChange = async (id, newStatus) => {
     setStatusUpdating(id);
     try {
-      const res = await fetch(`/api/contact/${id}/status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('adminToken')}`
-        },
-        body: JSON.stringify({ status })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setContacts(contacts => contacts.map(c => c._id === id ? { ...c, status } : c));
+      const res = await api.patch(`/api/contact/${id}/status`, { status: newStatus });
+      if (res.data.success) {
+        setContacts(prev =>
+          prev.map(contact =>
+            contact._id === id ? { ...contact, status: newStatus } : contact
+          )
+        );
       }
+    } catch (err) {
+      console.error('Status update failed:', err);
+      alert('Failed to update status. Please try again.');
     } finally {
-      setStatusUpdating("");
+      setStatusUpdating(null);
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pagination.pages) {
+      fetchContacts(newPage);
+      setPagination(prev => ({ ...prev, page: newPage }));
     }
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Contact Form Submissions</h2>
+    <div className="p-4 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Contact Form Submissions</h2>
+
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center">Loading...</p>
       ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <p className="text-red-600 text-center">{error}</p>
       ) : (
-        <table className="w-full border mt-4">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Message</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contacts.length > 0 ? contacts.map(c => (
-              <tr key={c._id} className="border-b">
-                <td className="p-2 border">{c.name}</td>
-                <td className="p-2 border">{c.email}</td>
-                <td className="p-2 border">{c.message}</td>
-                <td className="p-2 border">
-                  <select
-                    value={c.status || 'new'}
-                    onChange={e => handleStatusChange(c._id, e.target.value)}
-                    disabled={statusUpdating === c._id}
-                    className="border rounded px-2 py-1"
-                  >
-                    <option value="new">New</option>
-                    <option value="read">Read</option>
-                    <option value="replied">Replied</option>
-                  </select>
-                </td>
-                <td className="p-2 border">
-                  {/* Optionally add delete or view details here */}
-                </td>
+        <>
+          <table className="w-full table-auto border shadow text-sm">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="border p-2 text-left">Name</th>
+                <th className="border p-2 text-left">Email</th>
+                <th className="border p-2 text-left">Message</th>
+                <th className="border p-2 text-left">Status</th>
+                <th className="border p-2 text-center">Actions</th>
               </tr>
-            )) : (
-              <tr><td colSpan="5" className="text-center p-4">No contact submissions found.</td></tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {contacts.length > 0 ? (
+                contacts.map(contact => (
+                  <tr key={contact._id}>
+                    <td className="border p-2">{contact.name}</td>
+                    <td className="border p-2">{contact.email}</td>
+                    <td className="border p-2">{contact.message}</td>
+                    <td className="border p-2">
+                      <select
+                        value={contact.status}
+                        onChange={e => handleStatusChange(contact._id, e.target.value)}
+                        disabled={statusUpdating === contact._id}
+                        className="border rounded px-2 py-1"
+                      >
+                        <option value="new">New</option>
+                        <option value="read">Read</option>
+                        <option value="replied">Replied</option>
+                      </select>
+                    </td>
+                    <td className="border p-2 text-center">—</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center p-4">No contacts found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          {/* Pagination Controls */}
+          {pagination.pages > 1 && (
+            <div className="flex justify-center mt-4 gap-2">
+              <button
+                onClick={() => handlePageChange(pagination.page - 1)}
+                disabled={pagination.page === 1}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Prev
+              </button>
+              <span className="px-3 py-1">{pagination.page} / {pagination.pages}</span>
+              <button
+                onClick={() => handlePageChange(pagination.page + 1)}
+                disabled={pagination.page === pagination.pages}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
 };
 
-export default AdminContactPage; 
+export default AdminContactPage;

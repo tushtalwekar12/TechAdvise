@@ -1,15 +1,18 @@
+import mongoose from 'mongoose';
 import Contact from '../models/Contact.js';
 
-// Create new contact
+// @desc    Submit contact form
+// @route   POST /api/contact
+// @access  Public
 export const submitContact = async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Validate required fields
+    // Basic validation
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields"
+        message: "Please provide all required fields (name, email, message)",
       });
     }
 
@@ -19,19 +22,30 @@ export const submitContact = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Contact form submitted successfully",
-      data: newContact
+      data: newContact,
     });
   } catch (error) {
-    console.error('Contact submission error:', error);
+    console.error("Contact submission error:", error);
+
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: error.errors,
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: "Error submitting contact form",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 };
 
-// Get all contacts (admin) with pagination
+// @desc    Get all contacts with pagination and filters
+// @route   GET /api/contact
+// @access  Admin
 export const getAllContacts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -39,24 +53,24 @@ export const getAllContacts = async (req, res) => {
     const status = req.query.status;
     const search = req.query.search;
 
-    // Build query
     const query = {};
     if (status) query.status = status;
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } }
+        { email: { $regex: search, $options: 'i' } },
       ];
     }
 
-    // Execute query with pagination
-    const contacts = await Contact.find(query)
-      .sort({ submittedAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
+    const skip = (page - 1) * limit;
 
-    // Get total count for pagination
-    const total = await Contact.countDocuments(query);
+    const [contacts, total] = await Promise.all([
+      Contact.find(query)
+        .sort({ submittedAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Contact.countDocuments(query),
+    ]);
 
     res.json({
       success: true,
@@ -65,29 +79,41 @@ export const getAllContacts = async (req, res) => {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
-    console.error('Get contacts error:', error);
+    console.error("Get contacts error:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching contacts",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 };
 
-// Update contact status
+// @desc    Update contact status (e.g. new → read/replied)
+// @route   PATCH /api/contact/:id/status
+// @access  Admin
 export const updateContactStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!status || !['new', 'read', 'replied'].includes(status)) {
+    // Validate status value
+    const validStatuses = ['new', 'read', 'replied'];
+    if (!status || !validStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid status value"
+        message: `Invalid status value. Allowed: ${validStatuses.join(', ')}`,
+      });
+    }
+
+    // Validate ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid contact ID",
       });
     }
 
@@ -100,21 +126,21 @@ export const updateContactStatus = async (req, res) => {
     if (!contact) {
       return res.status(404).json({
         success: false,
-        message: "Contact not found"
+        message: "Contact not found",
       });
     }
 
     res.json({
       success: true,
-      message: "Contact status updated",
-      data: contact
+      message: "Contact status updated successfully",
+      data: contact,
     });
   } catch (error) {
-    console.error('Update contact status error:', error);
+    console.error("Update contact status error:", error);
     res.status(500).json({
       success: false,
       message: "Error updating contact status",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 };

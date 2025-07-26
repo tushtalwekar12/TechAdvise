@@ -12,7 +12,7 @@ import footerReducer from './features/footer/footerSlice';
 import faqReducer from './features/faq/faqSlice';
 import testimonialReducer from './features/testimonials/testimonialSlice';
 import quoteReducer from './features/quote/quotesice';
-
+import contactReducer from './features/contact/contactSlice'
 
 const store = configureStore({
   reducer: {
@@ -29,6 +29,7 @@ const store = configureStore({
     faq: faqReducer,
     testimonials: testimonialReducer,
     quote: quoteReducer,
+    contact: contactReducer
   },
 });
 
