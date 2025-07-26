@@ -14,6 +14,10 @@ import testimonialReducer from '../features/testimonials/testimonialSlice';
 import quoteReducer from '../features/quote/quoteSlice';
 import contactReducer from '../features/contact/contactSlice'
 
+
+
+
+
 const store = configureStore({
   reducer: {
     internships: internshipReducer,
