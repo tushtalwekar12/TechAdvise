@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAboutPageContent } from '../features/aboutPage/aboutPageSlice';
+import { fetchAboutPageContent } from '../features/aboutPage/aboutPageSlice'
 import { Helmet } from "react-helmet";
 
 const AboutPage = () => {

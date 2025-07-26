@@ -1,10 +1,10 @@
 // frontend/src/App.jsx
 import React, { useEffect, useState, useRef } from 'react';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from './common/Header';
+import Footer from './common/Footer';
 import { Outlet } from 'react-router-dom';
-import BackToTopButton from '../components/BackToTopButton';
-import QuoteRequestSection from '../components/QuoteRequestSection';
+import BackToTopButton from './components/BackToTopButton';
+import QuoteRequestSection from './components/QuoteRequestSection';
 import './App.css';
 
 function App() {
