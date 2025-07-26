@@ -11,13 +11,14 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>Home | TechAdvise</title>
-        <meta name="description" content="Welcome to TechAdvise, a modern digital agency empowering learners and creators." />
-        <meta property="og:title" content="Home | TechAdvise" />
-        <meta property="og:description" content="Welcome to TechAdvise, a modern digital agency empowering learners and creators." />
+        <title>Top Web Development & IT Services Company | TechAdvise</title>
+        <meta name="description" content="TechAdvise is a leading web development agency offering IT solutions, mobile app development, cloud hosting, and SEO services for startups and enterprises in India." />
+        <meta name="keywords" content="web development, website development, web development company, IT services, mobile app development company, cloud hosting India, IT support, SEO services India" />
+        <meta property="og:title" content="Top Web Development & IT Services Company | TechAdvise" />
+        <meta property="og:description" content="Full-stack development, mobile apps, cloud solutions & IT support for your digital growth. Get started with TechAdvise today!" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Home | TechAdvise" />
-        <meta name="twitter:description" content="Welcome to TechAdvise, a modern digital agency empowering learners and creators." />
+        <meta name="twitter:title" content="Top Web Development & IT Services Company | TechAdvise" />
+        <meta name="twitter:description" content="TechAdvise is your digital partner for web development, mobile app development, cloud migration, and IT support in India." />
       </Helmet>
       <HeroSection/>
       <HighlightsSection />

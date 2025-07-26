@@ -18,7 +18,9 @@ const BlogSection = () => {
       <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-8 text-center">
         Latest Blog Articles
       </h2>
-
+      <p className="text-[#60768a] text-sm sm:text-base text-center mb-8">
+        Insights on Web Development, SEO, and IT Trends
+      </p>
       {loading && <div>Loading blogs...</div>}
       {error && <div className="text-red-600">Error: {error}</div>}
 

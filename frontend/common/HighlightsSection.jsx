@@ -25,9 +25,13 @@ const HighlightsSection = () => {
 
   return (
     <section className="py-12 px-4 md:px-10 lg:px-20 bg-white">
-      <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-8 text-center">
+      <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight text-center mb-2">
         Why Choose TechAdvise?
       </h2>
+      <p className="text-[#60768a] text-sm sm:text-base text-center mb-8 max-w-4xl mx-auto">
+       We offer full stack solutions including WordPress, React.js, ecommerce platforms, and cloud migration via AWS & Azure.
+      </p>
+
 
       {loading && <div>Loading highlights...</div>}
       {error && <div className="text-red-600">Error: {error}</div>}
@@ -49,10 +53,10 @@ const HighlightsSection = () => {
                       (iconKey === "trophy"
                         ? "bg-blue-100"
                         : iconKey === "users"
-                        ? "bg-green-100"
-                        : iconKey === "headset"
-                        ? "bg-yellow-100"
-                        : "bg-blue-100")
+                          ? "bg-green-100"
+                          : iconKey === "headset"
+                            ? "bg-yellow-100"
+                            : "bg-blue-100")
                     }
                   >
                     {ICON_MAP[iconKey] || (

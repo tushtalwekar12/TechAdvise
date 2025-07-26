@@ -39,7 +39,7 @@ const StayUpdatedSection = () => {
           Stay Updated
         </h2>
         <p className="text-[#111518] text-base font-normal leading-normal max-w-[720px]">
-          Subscribe to our newsletter for the latest career tips and opportunities.
+         Subscribe to get tips on full stack development, mobile apps, and IT solutions straight to your inbox.
         </p>
       </div>
       {/* Email Input Form */}
