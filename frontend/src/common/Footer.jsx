@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { fetchFooterContent } from '../features/footer/footerSlice';
 
 const ICON_SVGS = {
   twitter: (
@@ -29,23 +27,31 @@ const ICON_SVGS = {
 const isInternalLink = (url) => /^\/(?!\/)/.test(url); // e.g. "/about", "/contact"
 
 const Footer = () => {
-  const dispatch = useDispatch();
-  const { content, loading, error } = useSelector((state) => state.footer);
-
-  useEffect(() => {
-    dispatch(fetchFooterContent());
-  }, [dispatch]);
-
-  if (loading) return <footer className="py-8 text-center">Loading footer...</footer>;
-  if (error) return <footer className="py-8 text-center text-red-600">Error: {error}</footer>;
-  if (!content) return null;
+  // Footer content is now static and defined directly in the component.
+  const footerData = {
+    links: [
+      { label: 'Home', url: '/' },
+      { label: 'About Us', url: '/about' },
+      { label: 'Services', url: '/services' },
+      { label: 'Contact', url: '/contact' },
+      { label: 'Privacy Policy', url: '/privacy-policy' },
+      { label: 'Terms of Service', url: '/terms-of-service' },
+    ],
+    social: [
+      { platform: 'twitter', url: 'https://twitter.com' },
+      { platform: 'facebook', url: 'https://facebook.com' },
+      { platform: 'instagram', url: 'https://instagram.com' },
+      { platform: 'linkedin', url: 'https://linkedin.com' },
+    ],
+    copyright: `© ${new Date().getFullYear()} TechAdvise. All Rights Reserved.`,
+  };
 
   return (
     <footer className="bg-gray-100 py-10 px-5 text-center">
       <div className="max-w-[960px] mx-auto flex flex-col items-center gap-6">
         {/* Navigation Links */}
         <div className="flex flex-wrap justify-center gap-6">
-          {content.links?.map((link, idx) =>
+          {footerData.links.map((link, idx) =>
             isInternalLink(link.url) ? (
               <Link
                 key={idx}
@@ -70,7 +76,7 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="flex flex-wrap justify-center gap-4">
-          {content.social?.map((soc, idx) => (
+          {footerData.social.map((soc, idx) => (
             <a
               key={idx}
               href={soc.url}
@@ -89,7 +95,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <p className="text-[#60768a] text-sm font-normal">{content?.copyright}</p>
+        <p className="text-[#60768a] text-sm font-normal">{footerData.copyright}</p>
       </div>
     </footer>
   );
