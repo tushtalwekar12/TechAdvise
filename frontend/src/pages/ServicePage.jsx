@@ -3,7 +3,7 @@ import { Trophy, Users, Headset, TrendUp } from "phosphor-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServicePageContent } from '../features/servicePage/servicePageSlice';
 import { fetchFAQs } from '../features/faq/faqSlice';
-import { Helmet } from "react-helmet";  
+import { Helmet } from "react-helmet-async";
 
 const ICON_MAP = {
   'briefcase': <i className="ph ph-briefcase"></i>,

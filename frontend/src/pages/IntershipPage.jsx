@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInternships } from '../features/internships/internshipSlice';
 import { fetchFAQs } from '../features/faq/faqSlice';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const InternshipPage = () => {
   const dispatch = useDispatch();

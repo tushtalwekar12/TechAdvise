@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContactInfo } from '../features/contactInfo/contactInfoSlice';
 import { submitContact, clearContactState } from '../features/contact/contactSlice';
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet-async";
 
 const ContactPage = () => {
   const dispatch = useDispatch();

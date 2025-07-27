@@ -1,13 +1,8 @@
 import express from 'express';
 import { body } from 'express-validator';
-import {
-  createQuote,
-  getQuotes,
-  getQuote,
-  updateQuote,
-  deleteQuote
-} from '../controllers/quoteController.js';
+
 import { protect, authorize } from '../middleware/auth.js';
+import { createQuote, deleteQuote, getAllQuotes, getQuoteById } from '../controllers/quoteController.js';
 
 const router = express.Router();
 
@@ -28,9 +23,16 @@ router.post(
 router.use(protect);
 router.use(authorize('admin', 'superadmin'));
 
-router.get('/', getQuotes);
-router.get('/:id', getQuote);
-router.put('/:id', updateQuote);
+// POST /api/quotes — user submits quote
+router.post('/', createQuote);
+
+// GET /api/quotes — admin gets all quotes
+router.get('/', getAllQuotes);
+
+// GET /api/quotes/:id — get single quote
+router.get('/:id', getQuoteById);
+
+// DELETE /api/quotes/:id — delete quote
 router.delete('/:id', deleteQuote);
 
 export default router;

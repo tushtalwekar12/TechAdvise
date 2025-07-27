@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHighlights } from "../features/highlights/highlightsSlice";
+import { fetchHighlights } from "../../features/highlights/highlightsSlice";
 import { Trophy, Users, Headset, TrendUp } from "phosphor-react";
 import { Briefcase, GraduationCap, Smile } from "lucide-react";
 

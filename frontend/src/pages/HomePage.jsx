@@ -1,11 +1,11 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection';
-import HighlightsSection from '../common/HighlightsSection';
-import TestimonialSection from '../common/TestimonialSection';
+import HighlightsSection from '../components/common/HighlightsSection';
+import TestimonialSection from '../components/common/TestimonialSection';
 import BlogSection from "../components/BlogSection";
 import StayUpdatedSection from "../components/StayUpdatedSection";
 import QuoteRequestSection from '../components/QuoteRequestSection';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const HomePage = () => {
   return (

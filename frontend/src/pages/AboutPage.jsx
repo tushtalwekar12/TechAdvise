@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAboutPageContent } from '../features/aboutPage/aboutPageSlice'
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const AboutPage = () => {
   const dispatch = useDispatch();
@@ -11,12 +11,14 @@ const AboutPage = () => {
     dispatch(fetchAboutPageContent());
   }, [dispatch]);
 
+    const { mission, values, team, contact } = content;
+  const memoizedTeam = useMemo(() => team || [], [team]);
+  
   if (loading) return <div className="flex justify-center items-center min-h-screen">Loading about page...</div>;
   if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
   if (!content) return null;
 
-  const { mission, values, team, contact } = content;
-  const memoizedTeam = useMemo(() => team || [], [team]);
+
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourcesSection from '../components/ResourcesSection';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const ResourcesPage = () => {
   return (

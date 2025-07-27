@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHeroSection } from '../features/heroSection/heroSectionSlice';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
