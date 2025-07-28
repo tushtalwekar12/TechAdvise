@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAboutPageContent } from '../features/aboutPage/aboutPageSlice'
 import { Helmet } from "react-helmet-async";
@@ -11,13 +11,14 @@ const AboutPage = () => {
     dispatch(fetchAboutPageContent());
   }, [dispatch]);
 
-  if (loading) return <div className="flex justify-center items-center min-h-screen">Loading about page...</div>;
-  if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
+  if (loading) return <div>Loading about page...</div>;
+  if (error) return <div>Error: {error}</div>;
   if (!content) return null;
 
   // Only destructure after confirming content is not null
   const { mission, values, team, contact } = content;
-  const memoizedTeam = useMemo(() => team || [], [team]);
+  // Remove useMemo, use team directly
+  // const memoizedTeam = useMemo(() => team || [], [team]);
   
   return (
     <>
@@ -51,11 +52,11 @@ const AboutPage = () => {
           )}
 
           {/* Team */}
-          {memoizedTeam && memoizedTeam.length > 0 && (
+          {team && team.length > 0 && (
             <section>
               <h2 className="text-[22px] font-bold text-[#121416] px-2 pb-3">Meet Our Team</h2>
               <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-6 px-2">
-                {memoizedTeam.map((member, index) => (
+                {team.map((member, index) => (
                   <div key={index} className="flex flex-col items-center text-center gap-2">
                     <div
                       className="w-24 h-24 rounded-full bg-cover bg-center"

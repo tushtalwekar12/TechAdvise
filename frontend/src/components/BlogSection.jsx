@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlogs } from "../features/blogs/blogSlice";
 import { Link } from "react-router-dom";
@@ -11,8 +11,6 @@ const BlogSection = () => {
     dispatch(fetchBlogs());
   }, [dispatch]);
 
-  const memoizedArticles = useMemo(() => blogArticles || [], [blogArticles]);
-
   return (
     <section className="px-4 md:px-10 lg:px-20 pt-10 pb-16">
       <h2 className="text-[#111518] text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-8 text-center">
@@ -24,8 +22,8 @@ const BlogSection = () => {
       {loading && <div>Loading blogs...</div>}
       {error && <div className="text-red-600">Error: {error}</div>}
 
-      {memoizedArticles && memoizedArticles.length > 0 ? (
-        memoizedArticles.map((article, index) => (
+      {blogArticles && blogArticles.length > 0 ? (
+        blogArticles.map((article, index) => (
           <Link
             to={`/blog/${article._id}`}
             key={article._id || index}
