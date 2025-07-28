@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaPhone, FaClipboardList } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { submitQuote, resetQuoteState } from "../features/quote/quoteSlice";
+import { submitQuote, resetQuoteState } from "../features/quote/temp";
 
 const initialForm = {
   name: "",
