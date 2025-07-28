@@ -44,24 +44,30 @@ export const getBlogById = async (req, res) => {
 
 // Update a blog post
 export const updateBlog = async (req, res) => {
-  const { title, description, imageUrl } = req.body;
   try {
-    const blog = await Blog.findById(req.params.id);
-    if (!blog) {
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          ...(req.body.title && { title: req.body.title }),
+          ...(req.body.description && { description: req.body.description }),
+          ...(req.body.imageUrl && { imageUrl: req.body.imageUrl }),
+        }
+      },
+      { new: true }
+    );
+
+    if (!updatedBlog) {
       return res.status(404).json({ success: false, message: 'Blog not found' });
     }
 
-    blog.title = title || blog.title;
-    blog.description = description || blog.description;
-    blog.imageUrl = imageUrl || blog.imageUrl;
-
-    await blog.save();
-    res.status(200).json({ success: true, data: blog });
+    res.status(200).json({ success: true, data: updatedBlog });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
 
 // Delete a blog post
 export const deleteBlog = async (req, res) => {
