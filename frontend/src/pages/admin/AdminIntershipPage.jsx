@@ -22,6 +22,7 @@ const defaultForm = {
   requirements: '',
   benefits: '',
   isActive: true,
+  applicationLink: ''
 }
 
 const AdminIntershipPage = () => {
@@ -50,6 +51,7 @@ const AdminIntershipPage = () => {
       duration: form.duration.split(',').map(d => Number(d.trim())),
       requirements: form.requirements.split(',').map(r => r.trim()),
       benefits: form.benefits.split(',').map(b => b.trim()),
+      applicationLink: form.applicationLink
     }
     try {
       if (editId) {
@@ -78,6 +80,7 @@ const AdminIntershipPage = () => {
       duration: Array.isArray(internship.duration) ? internship.duration.join(', ') : internship.duration,
       requirements: Array.isArray(internship.requirements) ? internship.requirements.join(', ') : internship.requirements,
       benefits: Array.isArray(internship.benefits) ? internship.benefits.join(', ') : internship.benefits,
+      applicationLink: internship.applicationLink || ''
     })
     setSuccessMsg('')
     setErrorMsg('')
@@ -144,6 +147,16 @@ const AdminIntershipPage = () => {
           <input type="checkbox" name="isActive" checked={form.isActive} onChange={handleChange} />
           Active
         </label>
+        {/* Application Link (Google Form) */}
+        <input
+          className="border px-3 py-2 rounded"
+          type="url"
+          name="applicationLink"
+          placeholder="Application Link (Google Form URL)"
+          value={form.applicationLink}
+          onChange={handleChange}
+          required
+        />
         <button type="submit" className="bg-blue-600 text-white py-2 rounded font-semibold" disabled={loading}>
           {loading ? (editId ? 'Updating...' : 'Adding...') : (editId ? 'Update Internship' : 'Add Internship')}
         </button>
@@ -166,6 +179,7 @@ const AdminIntershipPage = () => {
               <th className="border px-3 py-2">Status</th>
               <th className="border px-3 py-2">Urgent</th>
               <th className="border px-3 py-2">Active</th>
+              <th className="border px-3 py-2">Application Link</th>
               <th className="border px-3 py-2">Actions</th>
             </tr>
           </thead>
@@ -183,6 +197,13 @@ const AdminIntershipPage = () => {
                   <td className="border px-3 py-2">{internship.status}</td>
                   <td className="border px-3 py-2">{internship.urgent ? 'Yes' : 'No'}</td>
                   <td className="border px-3 py-2">{internship.isActive ? 'Yes' : 'No'}</td>
+                  <td className="border px-3 py-2">
+                    {internship.applicationLink ? (
+                      <a href={internship.applicationLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline break-all">{internship.applicationLink}</a>
+                    ) : (
+                      <span className="text-gray-400">No link</span>
+                    )}
+                  </td>
                   <td className="border px-3 py-2 flex gap-2">
                     <button
                       className="bg-yellow-400 text-white px-2 py-1 rounded"
@@ -207,7 +228,7 @@ const AdminIntershipPage = () => {
               ))
             ) : (
               <tr>
-                <td className="border px-3 py-2 text-center" colSpan={11}>
+                <td className="border px-3 py-2 text-center" colSpan={12}>
                   No internships found.
                 </td>
               </tr>

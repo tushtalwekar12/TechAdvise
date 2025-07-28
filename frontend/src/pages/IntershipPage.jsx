@@ -422,7 +422,16 @@ const InternshipPage = () => {
                           >
                             {expandedCard === item.id ? 'Show Less' : 'View Details'}
                           </button>
-                          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                          <button
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                            onClick={() => {
+                              if (!item.applicationLink) {
+                                alert('No application link available for this internship.');
+                                return;
+                              }
+                              window.open(item.applicationLink, '_blank');
+                            }}
+                          >
                             Apply Now
                           </button>
                           <button className="border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors">
