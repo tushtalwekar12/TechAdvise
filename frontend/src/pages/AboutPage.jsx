@@ -11,15 +11,14 @@ const AboutPage = () => {
     dispatch(fetchAboutPageContent());
   }, [dispatch]);
 
-    const { mission, values, team, contact } = content;
-  const memoizedTeam = useMemo(() => team || [], [team]);
-  
   if (loading) return <div className="flex justify-center items-center min-h-screen">Loading about page...</div>;
   if (error) return <div className="flex justify-center items-center min-h-screen text-red-600">Error: {error}</div>;
   if (!content) return null;
 
-
-
+  // Only destructure after confirming content is not null
+  const { mission, values, team, contact } = content;
+  const memoizedTeam = useMemo(() => team || [], [team]);
+  
   return (
     <>
       <Helmet>
