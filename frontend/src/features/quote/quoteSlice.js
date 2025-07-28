@@ -6,7 +6,7 @@ export const submitQuote = createAsyncThunk(
   "quote/submitQuote",
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/quote", formData);
+      const res = await axios.post("/api/quotes", formData);
       return res.data;
     } catch (error) {
       return rejectWithValue(
