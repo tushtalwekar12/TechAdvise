@@ -1,21 +1,23 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // Async action to submit quote form
 export const submitQuote = createAsyncThunk(
-  'quote/submitQuote',
+  "quote/submitQuote",
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.post('/api/quote', formData);
+      const res = await axios.post("/api/quote", formData);
       return res.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || 'Submission failed');
+      return rejectWithValue(
+        error.response.data.message || "Submission failed"
+      );
     }
   }
 );
 
 const quoteSlice = createSlice({
-  name: 'quote',
+  name: "quote",
   initialState: {
     loading: false,
     success: false,
@@ -26,7 +28,7 @@ const quoteSlice = createSlice({
       state.loading = false;
       state.success = false;
       state.error = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,7 +47,7 @@ const quoteSlice = createSlice({
         state.success = false;
         state.error = action.payload;
       });
-  }
+  },
 });
 
 export const { resetQuoteState } = quoteSlice.actions;

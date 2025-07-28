@@ -11,8 +11,8 @@ import contactInfoReducer from "../features/contactInfo/contactInfoSlice";
 import footerReducer from "../features/footer/footerSlice";
 import faqReducer from "../features/faq/faqSlice";
 import testimonialReducer from "../features/testimonials/testimonialSlice";
-import quoteReducer from "../features/quote/temp";
 import contactReducer from "../features/contact/contactSlice";
+import quoteReducer from "../features/quote/quoteSlice";
 
 const store = configureStore({
   reducer: {
