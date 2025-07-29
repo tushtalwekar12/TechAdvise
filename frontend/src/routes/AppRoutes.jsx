@@ -33,22 +33,27 @@ import NotFoundPage from '../pages/NotFoundPage';
 
 const AppRoutes = () => (
   <Routes>
+    {/* Public Routes with Main Layout */}
     <Route path="/" element={<App />}>
       <Route index element={<HomePage />} />
       <Route path="services" element={<ServicePage />} />
       <Route path="internships" element={<IntershipPage />} />
       <Route path="resources" element={<ResourcesPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-      <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-       <Route path="/blog/:id" element={<BlogDetailsPage />} />
-       <Route path="*" element={<NotFoundPage />} />
+      <Route path="about" element={<AboutPage />} />
+      <Route path="contact" element={<ContactPage />} />
+      <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="terms-of-service" element={<TermsOfServicePage />} />
+      <Route path="blog/:id" element={<BlogDetailsPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
+
+    {/* Standalone Admin Login/Signup Routes */}
     <Route path="/admin/login" element={<AdminLoginPage />} />
     <Route path="/admin/signup" element={<AdminSignupPage />} />
+
+    {/* Protected Admin Dashboard Routes */}
     <Route
-      path="/admin/dashboard/*"
+      path="/admin/dashboard"
       element={
         <AdminProtectedRoute>
           <AdminDashboard />
@@ -67,7 +72,7 @@ const AppRoutes = () => (
       <Route path="faq" element={<AdminFAQPage />} />
       <Route path="quotes" element={<AdminQuotesPage />} />
       <Route path="contact-forms" element={<AdminContactPage />} />
-      <Route path="intership-page" element={<AdminIntershipPage/>} />
+      <Route path="intership-page" element={<AdminIntershipPage />} />
     </Route>
   </Routes>
 );

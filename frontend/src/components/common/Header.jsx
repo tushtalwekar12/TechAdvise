@@ -48,8 +48,8 @@ const Header = ({ openQuoteModal }) => {
       {mobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start px-4 py-4 gap-4 md:hidden z-50 animate-fade-in">
           <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-          <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/internships" onClick={() => setMobileMenuOpen(false)}>Internships</Link>
-          <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+          <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/internships" onClick={() => setMobileMenuOpen(false)}>Career</Link>
+          {/* <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link> */}
           <Link className="text-[#111418] text-base font-medium leading-normal w-full" to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
         </div>
       )}
