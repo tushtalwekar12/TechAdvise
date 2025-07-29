@@ -16,6 +16,7 @@ export const createInternship = async (req, res) => {
       description, 
       requirements, 
       benefits, 
+      applicationLink
     } = req.body;
     
     const internship = new Internship({ 
@@ -31,6 +32,7 @@ export const createInternship = async (req, res) => {
       description, 
       requirements, 
       benefits, 
+      applicationLink
     });
     
     await internship.save();
@@ -66,7 +68,11 @@ export const getInternshipById = async (req, res) => {
 // Update internship by ID
 export const updateInternship = async (req, res) => {
   try {
-    const internship = await Internship.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const internship = await Internship.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     if (!internship) {
       return res.status(404).json({ success: false, message: 'Internship not found' });
     }

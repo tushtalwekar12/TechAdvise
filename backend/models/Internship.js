@@ -46,6 +46,9 @@ const internshipSchema = new mongoose.Schema({
     type: [String],
     required: true
   },
+  applicationLink: {
+    type: String
+  },
   isActive: {
     type: Boolean,
     default: true

@@ -71,8 +71,8 @@ const blogSlice = createSlice({
   },
   reducers: {
     clearSelectedBlog: (state) => {
-    state.selected = null;
-  }
+      state.selected = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -89,18 +89,48 @@ const blogSlice = createSlice({
         state.error = action.payload;
       })
       // Create Blog
+      .addCase(createBlog.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(createBlog.fulfilled, (state, action) => {
+        state.loading = false;
         state.items.unshift(action.payload.data);
       })
+      .addCase(createBlog.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       // Update Blog
+      .addCase(updateBlog.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(updateBlog.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(b => b._id === action.payload.data._id);
         if (idx !== -1) state.items[idx] = action.payload.data;
       })
+      .addCase(updateBlog.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       // Delete Blog
+      .addCase(deleteBlog.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(deleteBlog.fulfilled, (state, action) => {
+        state.loading = false;
         state.items = state.items.filter(b => b._id !== action.payload);
       })
+      .addCase(deleteBlog.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //fetchByID
       .addCase(fetchBlogById.pending, (state) => {
         state.loading = true;
         state.error = null;

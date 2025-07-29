@@ -7,7 +7,7 @@ const CLOUDINARY_CLOUD_NAME = 'dflmcqecg';
 const CLOUDINARY_UPLOAD_PRESET = 'unsigned_upload';
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`;
 
-const initialForm = { title: '', description: '', imageUrl: '' ,author:''};
+const initialForm = { title: '', description: '', imageUrl: '', author: '' };
 
 const AdminBlogsPage = () => {
   const dispatch = useDispatch();
@@ -71,6 +71,10 @@ const AdminBlogsPage = () => {
         setUploadError('Please upload a valid image before submitting.');
         return;
       }
+      if (!form.author.trim()) {
+        setFormError('Author is required.');
+        return;
+      }
       if (editingId) {
         const result = await dispatch(updateBlog({ id: editingId, blogData: form }));
         if (result.error) {
@@ -96,7 +100,12 @@ const AdminBlogsPage = () => {
   };
 
   const handleEdit = blog => {
-    setForm({ title: blog.title, description: blog.description, imageUrl: blog.imageUrl || '' });
+    setForm({
+      title: blog.title,
+      description: blog.description,
+      imageUrl: blog.imageUrl || '',
+      author: blog.author || ''
+    });
     setEditingId(blog._id);
     setShowForm(true);
     setImagePreview(blog.imageUrl || '');
@@ -146,7 +155,7 @@ const AdminBlogsPage = () => {
             onChange={handleImageChange}
             disabled={uploading}
           />
-                    <input
+          <input
             className="block mb-2 p-2 w-full border rounded"
             name="author"
             placeholder="Author"
@@ -186,7 +195,7 @@ const AdminBlogsPage = () => {
             <th className="p-2 border">Title</th>
             <th className="p-2 border">Description</th>
             <th className="p-2 border">Image</th>
-             <th className="p-2 border">Author</th>
+            <th className="p-2 border">Author</th>
             <th className="p-2 border">Actions</th>
           </tr>
         </thead>
@@ -196,7 +205,7 @@ const AdminBlogsPage = () => {
               <td className="p-2 border">{blog.title}</td>
               <td className="p-2 border">{blog.description}</td>
               <td className="p-2 border">{blog.imageUrl ? <img src={blog.imageUrl} alt="" className="h-12" /> : '—'}</td>
-               <td className="p-2 border">{blog.author}</td>
+              <td className="p-2 border">{blog.author}</td>
               <td className="p-2 border">
                 <button className="mr-2 px-2 py-1 bg-yellow-500 text-white rounded" onClick={() => handleEdit(blog)}>Edit</button>
                 <button className="px-2 py-1 bg-red-600 text-white rounded" onClick={() => handleDelete(blog._id)}>Delete</button>

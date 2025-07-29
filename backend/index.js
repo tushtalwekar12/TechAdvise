@@ -16,7 +16,6 @@ import internshipRoutes from './routes/internshipRoutes.js';
 import subscriptionRoutes from './routes/subscriptionRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import quoteRoutes from './routes/quoteRoutes.js';
-// import testimonialRoutes from './routes/testimonialRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
 import rateLimit from 'express-rate-limit';
 import mcache from 'memory-cache';
@@ -62,7 +61,6 @@ app.use('/api/subscribe', subscriptionRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/contact-info', contactInfoRoutes);
 app.use('/api/quotes', quoteRoutes);
-// app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/service-page', servicePageRoutes);
 app.use('/api/about-page', aboutPageRoutes);
@@ -82,12 +80,25 @@ app.get('/', (req, res) => {
   });
 
 // Serve static frontend files
-app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+// app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
-// Handle all other routes (React Router fallback)
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
+// // Handle all other routes (React Router fallback)
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+// });
+if (process.env.NODE_ENV === 'production') {
+  // The '..' goes up one level from /backend to the project root
+  const frontendDistPath = path.join(__dirname, '..', 'frontend', 'dist');
+
+  // Serve static files from the React app
+  app.use(express.static(frontendDistPath));
+
+  // The "catchall" handler: for any request that doesn't match one above,
+  // send back React's index.html file.
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+}
 
 
 // Rate limiting

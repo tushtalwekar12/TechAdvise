@@ -132,6 +132,10 @@ export const validateInternship = [
     .notEmpty().withMessage('Benefit cannot be empty')
     .isLength({ min: 2, max: 200 }).withMessage('Benefit must be between 2 and 200 characters'),
 
+  body('applicationLink')
+    .optional()
+    .isURL().withMessage('Application link must be a valid URL'),
+
   body('image')
     .optional()
     .trim()
@@ -148,3 +152,4 @@ export const validateInternshipStatusUpdate = [
 
   handleValidationErrors
 ]; 
+
