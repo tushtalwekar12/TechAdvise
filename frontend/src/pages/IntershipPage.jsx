@@ -125,7 +125,7 @@ const InternshipPage = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Career at TeachAdvise
+                Career at TechAdvise
               </h1>
               <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
                 Launch your career with hands-on experience in a dynamic educational technology company
@@ -372,24 +372,24 @@ const InternshipPage = () => {
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
+                          {/* <div>
                             <p className="text-gray-500">Compensation</p>
                             <p className="font-medium text-gray-900">{item.salary}</p>
-                          </div>
+                          </div> */}
                           {/* <div>
                             <p className="text-gray-500">Duration</p>
                             <p className="font-medium text-gray-900">{Array.isArray(item.duration) ? item.duration.join(', ') : item.duration || '-'} days</p>
                           </div> */}
-                          <div>
+                          {/* <div>
                             <p className="text-gray-500">Deadline</p>
                             <p className="font-medium text-gray-900">{formatDate(item.deadline)}</p>
-                          </div>
-                          <div>
+                          </div> */}
+                          {/* <div>
                             <p className="text-gray-500">Days Left</p>
                             <p className={`font-medium ${getDaysUntilDeadline(item.deadline) <= 7 ? 'text-red-600' : 'text-gray-900'}`}>
                               {getDaysUntilDeadline(item.deadline)} days
                             </p>
-                          </div>
+                          </div> */}
                         </div>
 
                         <p className="text-gray-700 leading-relaxed">{item.description}</p>

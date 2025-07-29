@@ -12,7 +12,7 @@ import TermsOfServicePage from '../pages/TermsOfServicePage';
 
 // Admin
 import AdminLoginPage from '../pages/admin/AdminLoginPage';
-import AdminSignupPage from '../pages/admin/AdminSignupPage';
+// import AdminSignupPage from '../pages/admin/AdminSignupPage';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminProtectedRoute from '../components/admin/AdminProtectedRoute';
 import AdminBlogsPage from '../pages/admin/AdminBlogsPage';
@@ -49,7 +49,7 @@ const AppRoutes = () => (
 
     {/* Standalone Admin Login/Signup Routes */}
     <Route path="/admin/login" element={<AdminLoginPage />} />
-    <Route path="/admin/signup" element={<AdminSignupPage />} />
+    {/* <Route path="/admin/signup" element={<AdminSignupPage />} /> */}
 
     {/* Protected Admin Dashboard Routes */}
     <Route
