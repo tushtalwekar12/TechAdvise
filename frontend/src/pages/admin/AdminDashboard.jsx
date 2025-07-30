@@ -24,6 +24,9 @@ const AdminDashboard = () => {
   const location = useLocation();
   const [blogCount, setBlogCount] = useState(0);
   const [internshipCount, setInternshipCount] = useState(0);
+  const [visitorStats, setVisitorStats] = useState([]);
+  const [todayCount, setTodayCount] = useState(0);
+  const [todayDate, setTodayDate] = useState('');
 
   const fetchCounts = async () => {
     try {
@@ -44,9 +47,25 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchVisitorStats = async () => {
+    try {
+      const res = await axios.get('/api/visitor-stats');
+      setVisitorStats(res.data);
+      const today = new Date().toISOString().slice(0, 10);
+      setTodayDate(today);
+      const todayStat = res.data.find(stat => stat.date === today);
+      setTodayCount(todayStat ? todayStat.count : 0);
+    } catch (error) {
+      setVisitorStats([]);
+      setTodayCount(0);
+      setTodayDate('');
+    }
+  };
+
   useEffect(() => {
     if (location.pathname === '/admin/dashboard') {
       fetchCounts();
+      fetchVisitorStats();
     }
   }, [location.pathname]);
 
@@ -155,6 +174,11 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
               <div className="text-3xl font-bold text-blue-700">{internshipCount}</div>
               <div className="text-gray-600 mt-2">Internships</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+              <div className="text-3xl font-bold text-blue-700">{todayCount}</div>
+              <div className="text-gray-600 mt-2">Visitors Today</div>
+              <div className="text-xs text-gray-400 mt-1">{todayDate}</div>
             </div>
           </div>
         )}
