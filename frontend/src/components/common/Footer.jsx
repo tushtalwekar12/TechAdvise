@@ -49,7 +49,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://instagram.com/yourcompany"
+            href="https://www.instagram.com/techadvise.in/?hl=en"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#60768a] hover:text-blue-600"
@@ -61,7 +61,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://linkedin.com/company/yourcompany"
+            href="https://www.linkedin.com/feed/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#60768a] hover:text-blue-600"
