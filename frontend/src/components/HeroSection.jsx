@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHeroSection } from '../features/heroSection/heroSectionSlice';
 import { Helmet } from "react-helmet-async";
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const dispatch = useDispatch();
@@ -47,11 +48,9 @@ const HeroSection = () => {
               </h2>
             </div>
             <div className="flex flex-wrap gap-3 justify-center">
-              {content.ctaText && (
-                <a href={content.ctaLink || '#'} className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 sm:h-12 px-4 sm:px-5 bg-[#0b80ee] text-white text-sm sm:text-base font-bold leading-normal tracking-[0.015em]">
-                  <span className="truncate">{content.ctaText}</span>
-                </a>
-              )}
+              <Link to="/contact" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 sm:h-12 px-4 sm:px-5 bg-[#0b80ee] text-white text-sm sm:text-base font-bold leading-normal tracking-[0.015em]">
+                <span className="truncate">{content.ctaText || 'Get Free Consultation'}</span>
+              </Link>
             </div>
           </div>
         </div>
