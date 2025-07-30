@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { adminLogout } from '../../features/admin/adminAuthSlice';
+import { 
+  fetchDashboardStats, 
+  selectDashboardStats, 
+  selectDashboardLoading, 
+  selectDashboardError 
+} from '../../features/dashboard/dashboardSlice';
+import VisitorStatsTable from '../../components/admin/VisitorStatsTable';
 import {
   LayoutDashboard,
   LogOut,
@@ -16,58 +23,22 @@ import {
   Quote,
   Mail
 } from 'lucide-react';
-import axios from 'axios';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const [blogCount, setBlogCount] = useState(0);
-  const [internshipCount, setInternshipCount] = useState(0);
-  const [visitorStats, setVisitorStats] = useState([]);
-  const [todayCount, setTodayCount] = useState(0);
-  const [todayDate, setTodayDate] = useState('');
-
-  const fetchCounts = async () => {
-    try {
-      const blogsRes = await axios.get('/api/blog/');
-      let blogs = Array.isArray(blogsRes.data)
-        ? blogsRes.data
-        : blogsRes.data.blogs || blogsRes.data.data || [];
-      setBlogCount(blogs.length);
-
-      const internshipsRes = await axios.get('/api/internships/');
-      let internships = Array.isArray(internshipsRes.data)
-        ? internshipsRes.data
-        : internshipsRes.data.internships || internshipsRes.data.data || [];
-      setInternshipCount(internships.length);
-    } catch (error) {
-      setBlogCount(0);
-      setInternshipCount(0);
-    }
-  };
-
-  const fetchVisitorStats = async () => {
-    try {
-      const res = await axios.get('/api/visitor-stats');
-      setVisitorStats(res.data);
-      const today = new Date().toISOString().slice(0, 10);
-      setTodayDate(today);
-      const todayStat = res.data.find(stat => stat.date === today);
-      setTodayCount(todayStat ? todayStat.count : 0);
-    } catch (error) {
-      setVisitorStats([]);
-      setTodayCount(0);
-      setTodayDate('');
-    }
-  };
+  
+  // Redux selectors
+  const { todayCount, todayDate, blogCount, internshipCount } = useSelector(selectDashboardStats);
+  const loading = useSelector(selectDashboardLoading);
+  const error = useSelector(selectDashboardError);
 
   useEffect(() => {
     if (location.pathname === '/admin/dashboard') {
-      fetchCounts();
-      fetchVisitorStats();
+      dispatch(fetchDashboardStats());
     }
-  }, [location.pathname]);
+  }, [location.pathname, dispatch]);
 
   const handleLogout = () => {
     dispatch(adminLogout());
@@ -166,21 +137,50 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="flex-1 p-4 sm:p-6 md:p-10 w-full max-w-full overflow-x-hidden">
         {location.pathname === '/admin/dashboard' && (
-          <div className="flex gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
-              <div className="text-3xl font-bold text-blue-700">{blogCount}</div>
-              <div className="text-gray-600 mt-2">Blogs</div>
+          <>
+            <div className="flex gap-6 mb-8">
+              {loading ? (
+                // Loading skeleton
+                <>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center animate-pulse">
+                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center animate-pulse">
+                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center animate-pulse">
+                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                  </div>
+                </>
+              ) : error ? (
+                // Error state
+                <div className="col-span-3 bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-red-600">Error loading dashboard stats: {error}</p>
+                </div>
+              ) : (
+                // Data cards
+                <>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+                    <div className="text-3xl font-bold text-blue-700">{blogCount}</div>
+                    <div className="text-gray-600 mt-2">Blogs</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+                    <div className="text-3xl font-bold text-blue-700">{internshipCount}</div>
+                    <div className="text-gray-600 mt-2">Internships</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
+                    <div className="text-3xl font-bold text-blue-700">{todayCount}</div>
+                    <div className="text-gray-600 mt-2">Visitors Today</div>
+                    <div className="text-xs text-gray-400 mt-1">{todayDate}</div>
+                  </div>
+                </>
+              )}
             </div>
-            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
-              <div className="text-3xl font-bold text-blue-700">{internshipCount}</div>
-              <div className="text-gray-600 mt-2">Internships</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-6 flex-1 text-center">
-              <div className="text-3xl font-bold text-blue-700">{todayCount}</div>
-              <div className="text-gray-600 mt-2">Visitors Today</div>
-              <div className="text-xs text-gray-400 mt-1">{todayDate}</div>
-            </div>
-          </div>
+            <VisitorStatsTable />
+          </>
         )}
         <Outlet />
       </main>

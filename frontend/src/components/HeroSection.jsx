@@ -3,11 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHeroSection } from '../features/heroSection/heroSectionSlice';
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { content, loading, error } = useSelector(state => state.heroSection);
 
   useEffect(() => {
@@ -50,12 +48,9 @@ const HeroSection = () => {
             </div>
             <div className="flex flex-wrap gap-3 justify-center">
               {content.ctaText && (
-                <button
-                  onClick={() => navigate('/contact')}
-                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 sm:h-12 px-4 sm:px-5 bg-[#0b80ee] text-white text-sm sm:text-base font-bold leading-normal tracking-[0.015em]"
-                >
+                <a href={content.ctaLink || '#'} className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 sm:h-12 px-4 sm:px-5 bg-[#0b80ee] text-white text-sm sm:text-base font-bold leading-normal tracking-[0.015em]">
                   <span className="truncate">{content.ctaText}</span>
-                </button>
+                </a>
               )}
             </div>
           </div>
