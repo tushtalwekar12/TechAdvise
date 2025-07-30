@@ -49,7 +49,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://www.instagram.com/techadvise.in?igsh=MW0wYzVkNGxqY2Nveg=="
+            href="https://www.instagram.com/techadvise.in/?hl=en"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#60768a] hover:text-blue-600"

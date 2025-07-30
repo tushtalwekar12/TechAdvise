@@ -121,19 +121,20 @@ const ContactPage = () => {
               <ContactInfo icon="location" label="Address" value={content.address} />
             )}
 
-            {content.mapEmbedUrl && (
-              <div className="mt-6">
-                <iframe
-                  src={content.mapEmbedUrl}
-                  title="Location Map"
-                  width="100%"
-                  height="200"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                ></iframe>
-              </div>
-            )}
+            {/* Google Maps - Bhande Plot, Nagpur */}
+            <div className="mt-6">
+              <h4 className="text-base font-semibold text-[#111518] mb-3">Our Location</h4>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.724506055489!2d79.1146464243088!3d21.123546834518056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c756271ba68d%3A0x423eb0bd22d3de90!2sBhande%20Plot%2C%20Nagpur%2C%20Maharashtra%20440024!5e0!3m2!1sen!2sin!4v1753860387255!5m2!1sen!2sin" 
+                width="100%" 
+                height="300" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="TechAdvise Location - Bhande Plot, Nagpur"
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>

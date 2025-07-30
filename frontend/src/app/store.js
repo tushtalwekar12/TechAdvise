@@ -13,6 +13,7 @@ import faqReducer from "../features/faq/faqSlice";
 import testimonialReducer from "../features/testimonials/testimonialSlice";
 import contactReducer from "../features/contact/contactSlice";
 import quoteReducer from "../features/quote/quoteSlice";
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     testimonials: testimonialReducer,
     quote: quoteReducer,
     contact: contactReducer,
+    dashboard: dashboardReducer,
   },
 });
 
