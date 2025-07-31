@@ -44,8 +44,8 @@ app.use(helmet());
 app.use(
   cors({
     origin: [
-      "https://techadvise-frontend.onrender.com", // your deployed frontend
-      "http://localhost:5173" // local dev
+      "https://www.techadvise.in", // real frontend domain
+      "http://localhost:5173", // local dev
     ],
     credentials: true,
   })
