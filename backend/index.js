@@ -41,7 +41,15 @@ const __dirname = path.dirname(__filename);
 
 // Security middleware
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://techadvise-frontend.onrender.com", // your deployed frontend
+      "http://localhost:5173" // local dev
+    ],
+    credentials: true,
+  })
+);
 
 app.use(hpp());
 

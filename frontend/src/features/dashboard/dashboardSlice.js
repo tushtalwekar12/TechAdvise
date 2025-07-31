@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../utils/api.js";
 
 // Async thunks
 export const fetchDashboardStats = createAsyncThunk(
@@ -8,9 +8,9 @@ export const fetchDashboardStats = createAsyncThunk(
     try {
       // Fetch all dashboard data in parallel
       const [visitorStatsRes, blogsRes, internshipsRes] = await Promise.all([
-        axios.get("/api/visitor-stats"),
-        axios.get("/api/blog/"),
-        axios.get("/api/internships/"),
+        api.get("/api/visitor-stats"),
+        api.get("/api/blog/"),
+        api.get("/api/internships/"),
       ]);
 
       // Process visitor stats
@@ -50,7 +50,7 @@ export const fetchVisitorStats = createAsyncThunk(
   "dashboard/fetchVisitorStats",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/visitor-stats");
+      const response = await api.get("/api/visitor-stats");
       const visitorStats = response.data;
       const today = new Date().toISOString().slice(0, 10);
       const todayStat = visitorStats.find((stat) => stat.date === today);
@@ -73,7 +73,7 @@ export const fetchBlogCount = createAsyncThunk(
   "dashboard/fetchBlogCount",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/blog/");
+      const response = await api.get("/api/blog/");
       const blogs = Array.isArray(response.data)
         ? response.data
         : response.data.blogs || response.data.data || [];
@@ -91,7 +91,7 @@ export const fetchInternshipCount = createAsyncThunk(
   "dashboard/fetchInternshipCount",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/internships/");
+      const response = await api.get("/api/internships/");
       const internships = Array.isArray(response.data)
         ? response.data
         : response.data.internships || response.data.data || [];
