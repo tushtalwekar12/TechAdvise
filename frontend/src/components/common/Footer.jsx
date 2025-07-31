@@ -61,7 +61,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://www.linkedin.com/feed/"
+            href="http://www.linkedin.com/in/techadvise"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#60768a] hover:text-blue-600"
